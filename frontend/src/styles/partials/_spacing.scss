@@ -1,0 +1,28 @@
+$spacing-small: 5px;
+
+$spacing-medium: 10px;
+
+$spacing-large: 20px;
+
+$spacing-xlarge: 40px;
+
+$spacing-xxlarge: 80px;
+
+$spacing-xxxlarge: 160px;
+
+@mixin reset-spacing{
+	padding: 0px;
+	margin: 0px;
+}
+
+@mixin reset-margin{
+	margin: 0px;
+}
+
+@mixin reset-padding{
+	padding: 0px;
+}
+
+@mixin reset-box-model(){
+	box-sizing: border-box;
+}

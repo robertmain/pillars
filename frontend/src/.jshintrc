@@ -1,0 +1,19 @@
+{
+	"strict": true,
+	"browser": true,
+	"undef": true,
+	"unused": true,
+	"camelcase": true,
+	"bitwise": true,
+	"curly": true,
+	"forin": true,
+	"immed": true,
+	"latedef": true,
+	"laxcomma": true,
+	"noarg": true,
+	"noempty": true,
+	"nonew": true,
+	"trailing": true,
+	"unused": "vars",
+	"predef": ["angular"]
+}

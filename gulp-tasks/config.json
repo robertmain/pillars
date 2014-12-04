@@ -1,0 +1,32 @@
+{
+	"folderSettings": {
+		"src": "frontend/src",
+		"dist": "frontend/build",
+		"images": "images",
+		"scripts": "scripts",
+		"styles": "styles",
+		"vendor": "vendor",
+		"bowerComponents": "frontend/libraries",
+		"_comments": ""
+	},
+	"filenameSettings": {
+		"concatVendorJsFile": "vendor.js",
+		"concatSrcJsFile": "src.js",
+		"concatVendorCSSFile": "vendor.css",
+		"concatSrcCSSFile": "src.css",
+		"_comments": "see 'File Configuration' section in repo README.md for more info"
+	},
+	"browserSettings": {
+		"supportedBrowsers": [
+		    "ie >= 7",
+		    "ie_mob >= 10",
+		    "ff >= 30",
+		    "chrome >= 34",
+		    "safari >= 7",
+		    "opera >= 23",
+		    "ios >= 7",
+		    "android >= 4.4",
+		    "bb >= 10"
+		]
+	}
+}
