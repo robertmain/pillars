@@ -1,3 +1,4 @@
 /node_modules
-/frontend/libraries
+/frontend/libraries/
+/frontend/build/
 /.sass-cache/
