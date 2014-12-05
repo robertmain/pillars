@@ -1,5 +1,5 @@
 var self
 module.exports = exports = self = {};
 self.webserver = {
-	port: 8000
+	port: process.env.PORT || 8000
 };
