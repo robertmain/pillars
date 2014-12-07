@@ -5,12 +5,14 @@ var gulp = require('gulp'),
     gulpConfig = require(__dirname + '/config.json'),
     packageFile = require('../package.json'),
     frontEndConfig = require('../frontend/config.js'),
-    $ = require('gulp-load-plugins')(),
+    $ = require('gulp-load-plugins')({
+        camelize: true
+    }),
     runSequence = require('run-sequence'),
-    minifyHTML = require('gulp-minify-html'),
     mainBowerFiles = require('main-bower-files'),
     reload = browserSync.reload,
-    PrettyError = require('pretty-error');
+    PrettyError = require('pretty-error'),
+    argv = require('yargs').argv;
 
 var pageFileTypeArray = ['html'],
     fontFileTypeArray = ['eot', 'svg', 'ttf', 'woff'],
@@ -38,6 +40,7 @@ var pageFileTypes = pageFileTypeArray.join(','),
 
 var onError = function(error) {
     var pe = new PrettyError();
+    pe.skipNodeFiles();
     console.log(pe.render(error));
 };
 
@@ -49,10 +52,16 @@ var uglifyConfig = {
     }
 };
 
+var production = argv.production;
+
 var copyrightBanner = ['\@copyright <%= packageFile.author %> <%= d.getFullYear() %> - <%= packageFile.description %>',
       '@version v<%= packageFile.version %>',
       '@link <%= packageFile.homepage %>',
       '@license <%= packageFile.license %>'];
+
+process.on('uncaughtException', function(e){
+    onError(e);
+});
 
 gulp.task('app:build:js:src', function() {
     return gulp.src(srcScripts + '/*.js')
@@ -63,8 +72,10 @@ gulp.task('app:build:js:src', function() {
         'app.js',
         'app-*.js'
     ]))
+    .pipe($.if(!!production, $.stripDebug()))
+    .pipe($.complexity({breakOnErrors: false}))
     .pipe($.concat(concatSrcJsFile))
-    .pipe($.uglify(uglifyConfig))
+    .pipe($.if(!!production, $.uglify(uglifyConfig), $.jsPrettify()))
     .pipe($.header('/*!\r\n * ' + copyrightBanner.join('\r\n * ') + '\r\n*/\r\n', {packageFile: packageFile, d: new Date()}))
     .pipe(gulp.dest(distScripts))
     .pipe(reload({stream: true, once: true}))
@@ -96,11 +107,15 @@ gulp.task('app:build:style:src', function() {
     .pipe($.plumber({
         errorHandler: onError
     }))
-    .pipe($.sass({
+    .pipe($.if(!!production, $.sass({
         includePaths: require('node-neat').with(require('node-bourbon').includePaths),
         outputStyle: 'compressed',
         onError: onError
-    }))
+    }), $.sass({
+        includePaths: require('node-neat').with(require('node-bourbon').includePaths),
+        outputStyle: 'expanded',
+        onError: onError
+    })))
     .pipe($.autoprefixer(prefixBrowsers, {cascade: true}))
     .pipe($.concat(concatSrcCSSFile))
     .pipe($.header('/*!\r\n * ' + copyrightBanner.join('\r\n * ') + '\r\n*/\r\n', {packageFile: packageFile, d: new Date()}))
@@ -129,7 +144,7 @@ gulp.task('app:build:style:vendor', function() {
 gulp.task('app:build:html:src', function(){
     runSequence('__app:reload:html');
     return gulp.src(src + '/**/*.html')
-    .pipe(minifyHTML({empty: true})) //Empty passed in to tell the minified not to break angular
+    .pipe($.if(!!production, $.minifyHtml({empty: true}), $.htmlPrettify({indent_char: '\t', indent_size: '1'})))
     .pipe($.header('<!--\r\n * ' + copyrightBanner.join('\r\n * ') + '\r\n-->\r\n', {packageFile: packageFile, d: new Date()}))
     .pipe(gulp.dest(dist))
     .pipe(reload({stream: true, once: true}));

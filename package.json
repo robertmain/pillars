@@ -5,10 +5,10 @@
   "homepage": "http://jsondecode.com",
   "main": "index.js",
   "dependencies": {
-    "express": "latest",
-    "require-dir": "~0.1.0"
+    "express": "latest"
   },
   "devDependencies": {
+    "require-dir": "~0.1.0",
     "gulp-header": "~1.2.2",
     "gulp-minify-html": "~0.1.7",
     "pretty-error": "~1.1.1",
@@ -36,7 +36,6 @@
     "gulp-load-plugins": "latest",
     "gulp-order": "latest",
     "gulp-plumber": "latest",
-    "gulp-removelogs": "latest",
     "gulp-shell": "latest",
     "gulp-size": "latest",
     "gulp-uglify": "latest",
@@ -45,7 +44,10 @@
     "main-bower-files": "latest",
     "opn": "latest",
     "run-sequence": "latest",
-    "yargs": "latest"
+    "yargs": "latest",
+    "gulp-strip-debug": "~1.0.2",
+    "gulp-html-prettify": "0.0.1",
+    "gulp-js-prettify": "~0.1.0"
   },
   "scripts": {
     "start-frontend": "node index.js"
