@@ -56,7 +56,6 @@ var copyrightBanner = ['\@copyright <%= packageFile.author %> <%= d.getFullYear(
 
 gulp.task('app:build:js:src', function() {
     return gulp.src(srcScripts + '/*.js')
-    .pipe($.filter('*.js'))
     .pipe($.plumber({
         errorHandler: onError
     }))
@@ -224,19 +223,19 @@ gulp.task('__app:proxy:local', function() {
 
 gulp.task('__app:clean:css', function(){
     return gulp.src([dist + '**/*.css'], {read: false})
-        .pipe($.rimraf())
+        .pipe($.clean())
     ;
 });
 
 gulp.task('__app:clean:js', function(){
     return gulp.src([dist + '**/*.js'], {read: false})
-        .pipe($.rimraf())
+        .pipe($.clean())
     ;
 });
 
 gulp.task('__app:clean:images', function(){
     return gulp.src([dist + '**/*.{' + imageFileTypes + '}'], {read: false})
-        .pipe($.rimraf())
+        .pipe($.clean())
     ;
 });
 
