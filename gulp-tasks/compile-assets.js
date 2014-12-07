@@ -84,6 +84,17 @@ gulp.task('app:build:js:src', function() {
     .pipe($.size({title: 'app:build:js:src'}));
 });
 
+gulp.task('app:test:js:src', function(){
+  return gulp.src('/test/frontend/*.test.js')
+    .pipe($.karma({
+      configFile: 'test/frontend/karma.conf.js',
+      action: 'run'
+    }))
+    .on('error', function(err) {
+      throw err;
+    });
+});
+
 gulp.task('app:build:js:vendor', function(){
     return gulp.src(mainBowerFiles({filter: /\.(js)$/i}))
     .pipe($.plumber({
@@ -159,13 +170,15 @@ gulp.task('app:build', function(callback) {
             'app:build:style:vendor',
             'app:build:html:src',
             '__app:copy:files',
-            'app:build:js:src',
             'app:build:js:vendor'
-        ], callback);
+        ],
+        'app:build:js:src',
+        // 'app:test:js:src',
+        callback);
 });
 
 gulp.task('app:serve', function(callback) {
-    runSequence('__app:clean:all', 'app:build', '__app:watch', '__app:proxy:local', callback);
+    runSequence('app:build', '__app:watch', '__app:proxy:local', callback);
 });
 
 
@@ -181,6 +194,7 @@ gulp.task('app:serve', function(callback) {
 gulp.task('__app:watch', function() {
     gulp.watch(srcStyles + '/**/**/*.scss', ['app:build:style:src']);
     gulp.watch(srcJs, ['app:build:js:src']);
+    gulp.watch(srcJs, ['app:test:js:src']);
     gulp.watch(src + '/**/*.html', ['app:build:html:src']);
     gulp.watch(src + '/**/*.{' + otherMyTypes + '}', ['__app:copy:files']);
     gulp.watch(gulpConfig.folderSettings.bowerComponents, ['app:build:js:vendor']);
@@ -254,10 +268,6 @@ gulp.task('__app:clean:images', function(){
     return gulp.src([dist + '**/*.{' + imageFileTypes + '}'], {read: false})
         .pipe(vinylPaths(del))
     ;
-});
-
-gulp.task('__app:clean:all', function(){
-    return gulp.start('__app:clean:css', '__app:clean:js', '__app:clean:images');
 });
 
 gulp.task('__app:reload:html', function(){

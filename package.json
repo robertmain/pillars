@@ -48,7 +48,10 @@
     "gulp-autoprefixer": "^2.0.0",
     "gulp-devtools": "^0.0.3",
     "gulp-imagemin": "^2.0.0",
-    "gulp-htmlhint": "^0.0.9"
+    "gulp-htmlhint": "^0.0.9",
+    "karma": "~0.12.28",
+    "gulp-karma": "0.0.4",
+    "jasmine": "~2.1.1"
   },
   "scripts": {
     "start-frontend": "node index.js"
