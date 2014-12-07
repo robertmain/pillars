@@ -85,7 +85,7 @@ gulp.task('app:build:js:src', function() {
 });
 
 gulp.task('app:test:js:src', function(){
-  return gulp.src('/test/frontend/*.test.js')
+  return gulp.src('test/frontend/*.test.js')
     .pipe($.karma({
       configFile: 'test/frontend/karma.conf.js',
       action: 'run'
