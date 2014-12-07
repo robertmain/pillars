@@ -7,6 +7,6 @@
 		var self = this;
 		self.frameworkName = "Pillars";
 		self.title = self.frameworkName;
-		self.tagline = "Your Starting Framework For Every Web Project"
+		self.tagline = "Your Starting Framework For Every Web Project";
 	}])
 }());

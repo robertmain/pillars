@@ -12,6 +12,8 @@ var gulp = require('gulp'),
     mainBowerFiles = require('main-bower-files'),
     reload = browserSync.reload,
     PrettyError = require('pretty-error'),
+    del = require('del'),
+    vinylPaths = require('vinyl-paths'),
     argv = require('yargs').argv;
 
 var pageFileTypeArray = ['html'],
@@ -189,7 +191,7 @@ gulp.task('__app:clean:project', function() {
     .pipe($.plumber({
         errorHandler: onError
     }))
-    .pipe($.clean());
+    .pipe(vinylPaths(del));
 });
 
 gulp.task('__app:copy:files', function() {
@@ -238,19 +240,19 @@ gulp.task('__app:proxy:local', function() {
 
 gulp.task('__app:clean:css', function(){
     return gulp.src([dist + '**/*.css'], {read: false})
-        .pipe($.clean())
+        .pipe(vinylPaths(del))
     ;
 });
 
 gulp.task('__app:clean:js', function(){
     return gulp.src([dist + '**/*.js'], {read: false})
-        .pipe($.clean())
+        .pipe(vinylPaths(del))
     ;
 });
 
 gulp.task('__app:clean:images', function(){
     return gulp.src([dist + '**/*.{' + imageFileTypes + '}'], {read: false})
-        .pipe($.clean())
+        .pipe(vinylPaths(del))
     ;
 });
 
