@@ -161,7 +161,7 @@ gulp.task('app:build', function(callback) {
             'app:build:js:vendor'
         ],
         'app:build:js:src',
-        // 'app:test:js:src',
+        '__app:test:js',
         callback);
 });
 
@@ -181,8 +181,8 @@ gulp.task('app:serve', function(callback) {
 
 gulp.task('__app:test:js', function(){
     return gulp.src([
-        distScripts + '/' + concatSrcJsFile,
         distScripts + '/' + concatVendorJsFile,
+        distScripts + '/' + concatSrcJsFile,
         'test/frontend/**/*.test.js'
     ])
     .pipe($.karma({
