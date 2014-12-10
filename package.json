@@ -64,6 +64,6 @@
     "url": "git@bitbucket.org:jsondecode/pillars.git"
   },
   "author": "{JSON:Decode}",
-  "license": "GPL",
+  "license": "MIT License, http://www.opensource.org/licenses/MIT",
   "private": true
 }
