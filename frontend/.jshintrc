@@ -19,5 +19,10 @@
 
 	"laxcomma": true,
 	
-	"node": true
+	"browser": true,
+
+	"predef": {
+		"angular": true,
+		"$": true
+	}
 }
