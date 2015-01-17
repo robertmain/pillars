@@ -6,15 +6,13 @@
 		"scripts": "scripts",
 		"styles": "styles",
 		"vendor": "vendor",
-		"bowerComponents": "frontend/libraries",
-		"_comments": ""
+		"bowerComponents": "frontend/libraries"
 	},
 	"filenameSettings": {
 		"concatVendorJsFile": "vendor.js",
 		"concatSrcJsFile": "src.js",
 		"concatVendorCSSFile": "vendor.css",
-		"concatSrcCSSFile": "src.css",
-		"_comments": "see 'File Configuration' section in repo README.md for more info"
+		"concatSrcCSSFile": "src.css"
 	},
 	"browserSettings": {
 		"supportedBrowsers": [
@@ -28,5 +26,12 @@
 		    "android >= 4.4",
 		    "bb >= 10"
 		]
+	}, 
+	"fileTypes": {
+		"pages": ["html"],
+		"fonts": ["eot", "svg", "ttf", "woff"],
+		"images": ["jpg", "JPG", "png", "PNG"],
+		"scripts": ["js"],
+		"styles": ["css", "scss"]
 	}
 }

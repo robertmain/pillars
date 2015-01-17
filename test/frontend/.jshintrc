@@ -1,0 +1,32 @@
+{
+	"bitwise": true,
+	"camelcase": true,
+	"curly": true,
+	"eqeqeq": true,
+	"forin": true,
+	"immed": true,
+	"indent": 1,
+	"latedef": true,
+	"newcap": true,
+	"noarg": true,
+	"noempty": true,
+	"nonbsp": true,
+	"nonew": true,
+	"quotmark": true,
+	"undef": true,
+	"unused": true,
+	"strict": true,
+
+	"laxcomma": true,
+	
+	"browser": true,
+
+	"predef": {
+		"describe": true,
+		"it": true,
+		"inject": true,
+		"beforeEach": true,
+		"angular": true,
+		"expect": true
+	}
+}
