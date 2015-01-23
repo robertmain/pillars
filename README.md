@@ -8,20 +8,20 @@
 - **`gulp app:build`**  
   Builds a copy of the code, installs all dependencies, and does everything that `gulp app:serve` does but with no web server. This is useful for continuous integration environments (protip: use with the ``--production`` flag for CI!). Runs all tests in development mode and displays a JavaScript code complexity report(not in production mode though).
 
-  - **`gulp app:build:js:src`**  
-  Rebuilds a copy of your application's JavaScript code. If you specify `--production`, the code will be minified as well and tests/complexity reports will be skipped. 
+    - **`gulp app:build:js:src`**  
+    Rebuilds a copy of your application's JavaScript code. If you specify `--production`, the code will be minified as well and tests/complexity reports will be skipped. 
 
-  - **`gulp app:build:js:vendor`**  
-  As above, however `--production` has no effect on this command (third party JavaScript is _always_ minified)
+    - **`gulp app:build:js:vendor`**  
+    As above, however `--production` has no effect on this command (third party JavaScript is _always_ minified)
 
-  - **`gulp app:build:style:src`**  
-  Rebuilds a copy of your application's styling code. If you specify `--production`, the code will also be minified. 
+    - **`gulp app:build:style:src`**  
+    Rebuilds a copy of your application's styling code. If you specify `--production`, the code will also be minified. 
 
-  - **`gulp app:build:style:vendor`**  
-  As above, however `--production` has no effect on this command (third party CSS is _always_ minified).
+    - **`gulp app:build:style:vendor`**  
+    As above, however `--production` has no effect on this command (third party CSS is _always_ minified).
 
-  - **`gulp app:build:html:src`**  
-  Rebuilds a copy of your application's HTML. If you specify `production`, the code will be minified.
+    - **`gulp app:build:html:src`**  
+    Rebuilds a copy of your application's HTML. If you specify `production`, the code will be minified.
 - **`gulp app:test:js`**
   Runs any and all unit tests as specified in `/test`
 
@@ -71,4 +71,6 @@ When you run `gulp app:serve` several things happen. In order these are:
 1. The app is running and ready to use!
 
 #####A word on web servers
-Since this application includes gulp it is possible to use this to serve up the application in production. However, since this also includes BrowserSync and is not designed with security in mind **!!IT IS STRONGLY RECOMENDED THAT YOU DO NOT DO THIS!!**. Instead, if you wish to deploy to production, simply use the webserver that comes bundled with Pillars - `frontend.js`. Running `node frontend.js` will start a web server running on port 8000 (or whatever port you specify in `/frontend/config.js`).
+Since this application includes gulp it is possible to use this to serve up the application in production. However, since this also includes BrowserSync and is not designed with security in mind  
+**!!IT IS STRONGLY RECOMENDED THAT YOU DO NOT DO THIS!!**.  
+Instead, if you wish to deploy to production, simply use the webserver that comes bundled with Pillars - `frontend.js`. Running `node frontend.js` will start a web server running on port 8000 (or whatever port you specify in `/frontend/config.js`).
