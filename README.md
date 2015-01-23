@@ -22,6 +22,7 @@
 
     - **`gulp app:build:html:src`**  
     Rebuilds a copy of your application's HTML. If you specify `production`, the code will be minified.
+
 - **`gulp app:test:js`**
   Runs any and all unit tests as specified in `/test`
 
