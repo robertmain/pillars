@@ -5,7 +5,8 @@
   "homepage": "http://jsondecode.com",
   "main": "index.js",
   "dependencies": {
-    "express": "latest"
+    "express": "latest",
+    "git-rev": "~0.2.1"
   },
   "devDependencies": {
     "require-dir": "^0.1.0",
