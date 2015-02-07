@@ -38,7 +38,7 @@
 
 
 ##Adding Client Side Dependencies
-1. If you wish to add any client-side dependencies such as bootstrap, jQuery UI etc. either manually add it to `bower.json` or, run `bower install <bower package>` and re-start the application.
+1. If you wish to add any client-side dependencies such as bootstrap, jQuery UI etc. either manually add it to `bower.json` or, run `bower install <bower package> --save` and re-start the application.
 1. Any JS will be automatically minified and added to `/frontend/build/scripts/vendor.json`, any CSS/SASS/SCSS will automatically be compiled and added to `/frontend/build/styles/vendor.css`
 
 ##How Does It Work?
