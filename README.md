@@ -29,6 +29,7 @@
 **Please note: ** The `--production` flag can be applied to any of the above commands (although with any vendor tasks it will have little to no effect)
 
 ##Installation and Initial Setup
+1. You will require an installation of Node.JS. You can get the latest version of this from [here](http://nodejs.org/)
 1. You will require a global installation of gulp and bower. To get these run `npm install -g gulp bower`. On linux this will require super-user access
 1. To install the server side dependencies first run: `npm install`
 1. To start the app and install any client side dependencies outlined in `bower.json` simply run `gulp app:serve` (see below for exactly what this does).
@@ -37,7 +38,7 @@
 
 
 ##Adding Client Side Dependencies
-1. If you wish to add any client-side dependencies such as bootstrap, jQuery UI etc. either manually add it to `bower.json` or, run `bower install <bower package>` and re-start the application.
+1. If you wish to add any client-side dependencies such as bootstrap, jQuery UI etc. either manually add it to `bower.json` or, run `bower install <bower package> --save` and re-start the application.
 1. Any JS will be automatically minified and added to `/frontend/build/scripts/vendor.json`, any CSS/SASS/SCSS will automatically be compiled and added to `/frontend/build/styles/vendor.css`
 
 ##How Does It Work?
