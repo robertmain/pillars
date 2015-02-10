@@ -23,6 +23,6 @@
 	}])
 
 	.run(['$state', '$rootScope', '$location', function($state, $rootScope, $location){
-		$state.go('index'); //Display the index page on start (redirect to the "app" state) 
+		$state.go('index'); //Display the index page on start (redirect to the "app" state)
 	}]);
 })();
