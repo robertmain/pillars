@@ -60,31 +60,30 @@ gulp.task("app:build:js:src", function(callback) {
         .pipe($.if(!!production, $.stripDebug()))
         .pipe($.if(!production, $.complexity({breakOnErrors: false})))
         .pipe($.if(debug, $.filelog()))
-        .pipe($.concat(c.concatSrcJsFile))
-        .pipe($.if(!!production, $.uglify(uglifyConfig), $.jsPrettify()))
-        .pipe(
-            $.header(
-                "/*!\r\n * " + copyrightBanner.join("\r\n * ") + "\r\n*/\r\n",
-                {
-                    packageFile: packageFile,
-                    gitRev: rev,
-                    d: new Date()
-                }
-            )
-        )
-        .pipe(gulp.dest(c.distScripts))
-        .pipe(reload({stream: true, once: true}))
         .pipe($.size({title: "app:build:js:src"}));
 
         var polyfillStream = srcStream.pipe($.autopolyfiller(c.jsPolyfillsFile, {
             browsers: c.prefixBrowsers
         }));
-
         callback(null, merge(polyfillStream, srcStream)
                 .pipe($.order([
                     c.jsPolyfillsFile,
                     c.concatSrcJsFile
                 ]))
+                .pipe($.concat(c.concatSrcJsFile))
+                .pipe($.if(!!production, $.uglify(uglifyConfig), $.jsPrettify()))
+                .pipe(
+                    $.header(
+                        "/*!\r\n * " + copyrightBanner.join("\r\n * ") + "\r\n*/\r\n",
+                        {
+                            packageFile: packageFile,
+                            gitRev: rev,
+                            d: new Date()
+                        }
+                    )
+                )
+                .pipe(gulp.dest(c.distScripts))
+                .pipe(reload({stream: true, once: true}))
             );
     });
 });
