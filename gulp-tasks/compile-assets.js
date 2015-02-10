@@ -31,7 +31,8 @@ var uglifyConfig = {
     }
 };
 
-var production = argv.production;
+var production = argv.production,
+    debug = argv.debug;
 
 var copyrightBanner = [
     "@copyright <%= packageFile.author %> <%= d.getFullYear() %> - <%= packageFile.description %>",
@@ -57,6 +58,7 @@ gulp.task("app:build:js:src", function(callback) {
         ]))
         .pipe($.if(!!production, $.stripDebug()))
         .pipe($.if(!production, $.complexity({breakOnErrors: false})))
+        .pipe($.if(debug, $.debug()))
         .pipe($.concat(c.concatSrcJsFile))
         .pipe($.if(!!production, $.uglify(uglifyConfig), $.jsPrettify()))
         .pipe(
@@ -81,6 +83,7 @@ gulp.task("app:build:js:vendor", function(){
     .pipe($.plumber({
         errorHandler: onError
     }))
+    .pipe($.if(debug, $.debug()))
     .pipe($.concat(c.concatVendorJsFile))
     .pipe($.uglify(uglifyConfig))
     .pipe(gulp.dest(c.distScripts))
@@ -104,6 +107,7 @@ gulp.task("app:build:style:src", function(callback) {
             onError: onError
         })))
         .pipe($.autoprefixer(c.prefixBrowsers, {cascade: true}))
+        .pipe($.if(debug, $.debug()))
         .pipe($.concat(c.concatSrcCSSFile))
         .pipe(
             $.header(
@@ -133,6 +137,7 @@ gulp.task("app:build:style:vendor", function() {
         onError: onError
     }))
     .pipe($.autoprefixer(c.prefixBrowsers, {cascade: true}))
+    .pipe($.if(debug, $.debug()))
     .pipe($.concat(c.concatVendorCSSFile))
     .pipe(gulp.dest(c.distStyles))
     .pipe(reload({stream: true, once: true}))
@@ -164,6 +169,7 @@ gulp.task("app:build:html:src", function(callback){
                 }
             )
         )
+        .pipe($.if(debug, $.debug()))
         .pipe(gulp.dest(c.dist))
         .pipe(reload({stream: true, once: true}));
         callback(null, pipe);
