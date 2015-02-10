@@ -12,7 +12,8 @@
 		"concatVendorJsFile": "vendor.js",
 		"concatSrcJsFile": "src.js",
 		"concatVendorCSSFile": "vendor.css",
-		"concatSrcCSSFile": "src.css"
+		"concatSrcCSSFile": "src.css",
+		"jsPolyfillsFile": "polyfills.js"
 	},
 	"browserSettings": {
 		"supportedBrowsers": [
@@ -26,7 +27,7 @@
 		    "android >= 4.4",
 		    "bb >= 10"
 		]
-	}, 
+	},
 	"fileTypes": {
 		"pages": ["html"],
 		"fonts": ["eot", "svg", "ttf", "woff"],

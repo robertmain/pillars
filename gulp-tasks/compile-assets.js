@@ -1,6 +1,7 @@
 "use strict";
 
 var gulp = require("gulp"),
+merge = require('event-stream').merge,
 browserSync = require("browser-sync"),
 packageFile = require("../package.json"),
 frontEndConfig = require("../frontend/config.js"),
@@ -48,7 +49,7 @@ process.on("uncaughtException", function(e){
 
 gulp.task("app:build:js:src", function(callback) {
     git.short(function(rev){
-        var pipe = gulp.src(c.srcScripts + "/*.js")
+        var srcStream = gulp.src(c.srcScripts + "/*.js")
         .pipe($.plumber({
             errorHandler: onError
         }))
@@ -74,7 +75,17 @@ gulp.task("app:build:js:src", function(callback) {
         .pipe(gulp.dest(c.distScripts))
         .pipe(reload({stream: true, once: true}))
         .pipe($.size({title: "app:build:js:src"}));
-        callback(null, pipe);
+
+        var polyfillStream = srcStream.pipe($.autopolyfiller(c.jsPolyfillsFile, {
+            browsers: c.prefixBrowsers
+        }));
+
+        callback(null, merge(polyfillStream, srcStream)
+                .pipe($.order([
+                    c.jsPolyfillsFile,
+                    c.concatSrcJsFile
+                ]))
+            );
     });
 });
 

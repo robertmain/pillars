@@ -21,6 +21,7 @@ module.exports = {
     concatVendorCSSFile: gulpConfig.filenameSettings.concatVendorCSSFile,
     concatSrcJsFile: gulpConfig.filenameSettings.concatSrcJsFile,
     concatVendorJsFile: gulpConfig.filenameSettings.concatVendorJsFile,
+    jsPolyfillsFile: gulpConfig.filenameSettings.jsPolyfillsFile,
     prefixBrowsers: gulpConfig.browserSettings.supportedBrowsers,
 
     pageFileTypes: pageFileTypes,
