@@ -137,12 +137,12 @@ gulp.task("app:build:style:src", function(callback) {
 });
 
 gulp.task("app:build:style:vendor", function() {
-    return gulp.src(mainBowerFiles({filter: /\.(s?css)$/i}))
+    return gulp.src(mainBowerFiles({filter: /\.(css)$/i}))
     .pipe($.plumber({
         errorHandler: onError
     }))
     .pipe($.sass({
-        includePaths: require("node-neat").with(require("node-bourbon").includePaths),
+        includePaths: mainBowerFiles({filter: /\.(scss)$/i}),
         outputStyle: "compressed",
         onError: onError
     }))
