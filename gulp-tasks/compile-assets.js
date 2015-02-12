@@ -60,7 +60,7 @@ gulp.task("app:build:js:src", function(callback) {
         ]))
         .pipe($.if(!!production, $.stripDebug()))
         .pipe($.if(!production, $.complexity({breakOnErrors: false})))
-        .pipe($.if(debug, $.filelog()))
+        .pipe($.if(!!debug, $.filelog()))
         .pipe($.size({title: "app:build:js:src"}));
 
         var polyfillStream = srcStream.pipe($.autopolyfiller(c.jsPolyfillsFile, {
@@ -94,7 +94,7 @@ gulp.task("app:build:js:vendor", function(){
     .pipe($.plumber({
         errorHandler: onError
     }))
-    .pipe($.if(debug, $.filelog()))
+    .pipe($.if(!!debug, $.filelog()))
     .pipe($.concat(c.concatVendorJsFile))
     .pipe($.uglify(uglifyConfig))
     .pipe(gulp.dest(c.distScripts))
@@ -114,16 +114,16 @@ gulp.task("app:build:style:src", function(callback) {
             errorHandler: onError
         }))
         .pipe($.if(!!production, $.sass({
-            includePaths: require("node-neat").with(require("node-bourbon").includePaths).concat(sassDirectories),
+            includePaths: sassDirectories,
             outputStyle: "compressed",
             onError: onError
         }), $.sass({
-            includePaths: require("node-neat").with(require("node-bourbon").includePaths).concat(sassDirectories),
+            includePaths: sassDirectories,
             outputStyle: "expanded",
             onError: onError
         })))
         .pipe($.autoprefixer(c.prefixBrowsers, {cascade: true}))
-        .pipe($.if(debug, $.filelog()))
+        .pipe($.if(!!debug, $.filelog()))
         .pipe($.concat(c.concatSrcCSSFile))
         .pipe(
             $.header(
@@ -148,12 +148,11 @@ gulp.task("app:build:style:vendor", function() {
         errorHandler: onError
     }))
     .pipe($.sass({
-        includePaths: mainBowerFiles({filter: /\.(scss)$/i}),
         outputStyle: "compressed",
         onError: onError
     }))
     .pipe($.autoprefixer(c.prefixBrowsers, {cascade: true}))
-    .pipe($.if(debug, $.filelog()))
+    .pipe($.if(!!debug, $.filelog()))
     .pipe($.concat(c.concatVendorCSSFile))
     .pipe(gulp.dest(c.distStyles))
     .pipe(reload({stream: true, once: true}))
@@ -185,7 +184,7 @@ gulp.task("app:build:html:src", function(callback){
                 }
             )
         )
-        .pipe($.if(debug, $.filelog()))
+        .pipe($.if(!!debug, $.filelog()))
         .pipe(gulp.dest(c.dist))
         .pipe(reload({stream: true, once: true}));
         callback(null, pipe);
@@ -259,7 +258,7 @@ gulp.task("__app:watch", function() {
     gulp.watch(c.srcJs, ["__app:test:js"]);
     gulp.watch(c.src + "/**/*.html", ["app:build:html:src"]);
     gulp.watch(c.src + "/**/*.{" + c.otherMyTypes + "}", ["__app:copy:files"]);
-    gulp.watch(c.bowerComponents, ["app:build:js:vendor"]);
+    gulp.watch(c.bowerComponents, ["app:build"]);
 });
 
 gulp.task("__app:clean:project", function() {
