@@ -1,7 +1,7 @@
 "use strict";
 
 var gulp = require("gulp"),
-merge = require('event-stream').merge,
+merge = require("event-stream").merge,
 browserSync = require("browser-sync"),
 packageFile = require("../package.json"),
 frontEndConfig = require("../frontend/config.js"),
@@ -16,6 +16,7 @@ del = require("del"),
 vinylPaths = require("vinyl-paths"),
 argv = require("yargs").argv,
 git = require("git-rev"),
+path = require("path"),
 c = require("./config.js");
 
 var onError = function(error) {
@@ -102,17 +103,22 @@ gulp.task("app:build:js:vendor", function(){
 });
 
 gulp.task("app:build:style:src", function(callback) {
+    var sassFiles = mainBowerFiles({filter: /\.(scss)$/i});
+    var sassDirectories = [];
+    sassFiles.forEach(function(sassFile){
+        sassDirectories.push(path.dirname(sassFile));
+    });
     git.short(function(rev){
         var pipe = gulp.src(c.srcStyles + "/**/*.scss")
         .pipe($.plumber({
             errorHandler: onError
         }))
         .pipe($.if(!!production, $.sass({
-            includePaths: require("node-neat").with(require("node-bourbon").includePaths),
+            includePaths: require("node-neat").with(require("node-bourbon").includePaths).concat(sassDirectories),
             outputStyle: "compressed",
             onError: onError
         }), $.sass({
-            includePaths: require("node-neat").with(require("node-bourbon").includePaths),
+            includePaths: require("node-neat").with(require("node-bourbon").includePaths).concat(sassDirectories),
             outputStyle: "expanded",
             onError: onError
         })))

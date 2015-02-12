@@ -3,4 +3,4 @@
 
 @import "foundation";
 
-button{ @include button; }
+button{ @include button(); }
