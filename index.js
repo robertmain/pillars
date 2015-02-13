@@ -2,9 +2,7 @@
 
 var express = require('express'),
 	app = express(),
-	frontEndConfig = require(__dirname + '/frontend/config.js'),
-	gulpConfig = require(__dirname + '/gulp-tasks/config.json'),
-	packageFile = require(__dirname + '/package.json');
+	appConfig = require(__dirname + '/config.js');
 
-app.use(express.static(__dirname + '/' + gulpConfig.folderSettings.dist));
-app.listen(frontEndConfig.webserver.port);
+app.use(express.static(__dirname + '/' + appConfig.webserver.staticDir));
+app.listen(appConfig.webserver.port);

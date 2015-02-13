@@ -2,3 +2,4 @@
 /frontend/libraries/
 /frontend/build/
 /.sass-cache/
+/coverage/*
