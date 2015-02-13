@@ -113,15 +113,12 @@ gulp.task("app:build:style:src", function(callback) {
         .pipe($.plumber({
             errorHandler: onError
         }))
-        .pipe($.if(!!production, $.sass({
+        .pipe($.sass({
             includePaths: sassDirectories,
             outputStyle: "compressed",
             onError: onError
-        }), $.sass({
-            includePaths: sassDirectories,
-            outputStyle: "expanded",
-            onError: onError
-        })))
+        }))
+        .pipe($.if(!production, $.cssbeautify()))
         .pipe($.autoprefixer(c.prefixBrowsers, {cascade: true}))
         .pipe($.if(!!debug, $.filelog()))
         .pipe($.concat(c.concatSrcCSSFile))
