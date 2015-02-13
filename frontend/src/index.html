@@ -9,50 +9,32 @@
 		<script src="scripts/vendor.js"></script>
 		<script src="scripts/src.js"></script>
 	</head>
-	<body>
-		<header>
-			<div class="container white">
-				<h3>{{ctrl.title}} &mdash; <small>{{ctrl.tagline}}</small></h3>
-			</div>
-		</header>
-		<div class="container white" ui-view></div>
-		<div class="container blue">
-			<h4><i class="fa fa-exclamation-triangle"></i> Whoah! Hold your horses there matey!</h4>
-			<p>Before you dive in and get started, you will need to tweak a few things here and there. These are as follows</p>
-			<div class="half">
-				<h5>Server Side/Build Environment</h5>
-				<ul>
-					<li>package.json (edit fields to suit your requirements - since this will end up in the branding at the top of all source files be careful what you write)</li>
-					<li>bower.json - not compulary, but you may wish to edit this for branding reasons</li>
-				</ul>
-			</div>
-			<div class="half">
-				<h5>Client Side</h5>
-				<ul>
-					<li>This content(obviously)</li>
-					<li>The HTML tag at the top of this page</li>
-					<li>The AngularJS module name</li>
-					<li>The angularJS filter/controller/directive module name</li>
-				</ul>
-			</div>
+	<body layout="row">
+		<md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2 md-closed ng-isolate-scope md-locked-open" md-component-id="left" md-is-locked-open="$media('gt-sm')" tabindex="-1">
+			<md-toolbar>
+				<h1 class="md-toolbar-tools">Pillars</h1>
+			</md-toolbar>
+			<md-content class="md-padding" >
+				<md-list>
+					<md-item ng-repeat="item in [1,2,3,4]">
+						<md-item-content>
+							<div class="md-tile-content">
+								<h3>Test</h3>
+							</div>
+						</md-item-content>
+						<md-divider ng-if="!$last"></md-divider>
+					</md-item>
+				</md-list>
+			</md-content>
+		</md-sidenav>
+		<div layout="column" layout-fill>
+			<md-toolbar md-scroll-shrink>
+				<div class="md-toolbar-tools">
+					<h3>
+						<span>Docs</span>
+					</h3>
+				</div>
+			</md-toolbar>
 		</div>
-		<div class="container white">
-			<h4>Getting Started</h4>
-			<p>Okay, cool so let's cover a few basics on how this thing works...</p>
-			<div class="half">
-				<h4>Server Side Dependencies</h4>
-				<p>These can be installed with <code>npm install</code> (duh.) You will need to do this the first time you clone/fork this repo</p>
-			</div>
-			<div class="half">
-				<h4>Client Side Dependency Management</h4>
-				<p>These can be installed using <code>bower install &lt;package&gt; --save</code>. This will add them to bower.json as well as downloading them into the <code>frontend/build</code> directory.</p>
-				<p>Typically, you would normally have to copy these over and link to them etc. Fortunately {{ctrl.frameworkName}}, automatically adds them to vendor.js and builds the file for you. This means that all your dependences are just &quot;there&quot; ready to use.</p>
-			</div>
-		</div>
-		<footer>
-			<div class="container white">
-				<p>&copy; {JSON:Decode}</p>
-			</div>
-		</footer>
 	</body>
 </html>
