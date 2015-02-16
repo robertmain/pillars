@@ -35,12 +35,20 @@ module.exports = {
 
 	//Misc
 	production: Boolean(argv.production),
+	debug: Boolean(argv.debug),
 	onError: function(error) {
 		var pe = new PrettyError();
 		pe.skipNodeFiles();
 		console.log(pe.render(error));
 	},
-	uglifyConfig: {
+	srcUglifyConfig: {
+		mangle: true,
+		preserveComments: "none",
+		output: {
+			beautify: false
+		}
+	},
+	vendorUglifyConfig: {
 		mangle: true,
 		preserveComments: "some",
 		output: {

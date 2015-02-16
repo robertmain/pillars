@@ -22,6 +22,7 @@
     "gulp-cssbeautify": "^0.1.3",
     "gulp-csslint": "^0.1.5",
     "gulp-devtools": "^0.0.3",
+    "gulp-filelog": "^0.4.1",
     "gulp-header": "^1.2.2",
     "gulp-html-prettify": "0.0.1",
     "gulp-htmlhint": "^0.0.9",

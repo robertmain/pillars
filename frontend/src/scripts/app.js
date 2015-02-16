@@ -10,7 +10,7 @@
 
 	.config(["$stateProvider", "$urlRouterProvider", "$httpProvider", "$provide", "$locationProvider", "$mdThemingProvider", function($stateProvider, $urlRouterProvider, $httpProvider, $provide, $locationProvider, $mdThemingProvider){
 		$mdThemingProvider.theme("default")
-			.primaryPalette('blue');
+			.primaryPalette("blue");
 		$stateProvider
 			.state("index", {
 				controller: "MainCtrl",
@@ -25,7 +25,7 @@
 		$urlRouterProvider.when("","/").otherwise("/404"); //404 Route
 	}])
 
-	.run(["$state", "$rootScope", "$location", function($state, $rootScope, $location){
+	.run(["$state", function($state){
 		$state.go("index"); //Display the index page on start (redirect to the "app" state)
 	}]);
 })();

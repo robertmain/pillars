@@ -27,6 +27,7 @@ gulp.task("app:build:style:src", function(callback) {
 			}))
 			.pipe($.if(!c.production, $.cssbeautify()))
 			.pipe($.autoprefixer(c.prefixBrowsers, {cascade: true}))
+			.pipe($.if(c.debug, $.filelog()))
 			.pipe($.concat(c.concatSrcCSSFile))
 			.pipe(
 				$.header(

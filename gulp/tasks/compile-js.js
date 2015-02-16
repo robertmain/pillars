@@ -11,7 +11,7 @@ var gulp = require("gulp"),
 
 gulp.task("app:build:js:src", function(callback) {
 	git.short(function(rev){
-		var srcStream = gulp.src(c.srcScripts + "/**/*.js")
+		var srcStream = gulp.src(c.srcJs)
 			.pipe($.plumber({
 				errorHandler: c.onError
 			}))
@@ -21,6 +21,7 @@ gulp.task("app:build:js:src", function(callback) {
 			]))
 			.pipe($.if(c.production, $.stripDebug()))
 			.pipe($.if(c.production, $.complexity({breakOnErrors: false})))
+			.pipe($.if(c.debug, $.filelog()))
 			.pipe($.concat(c.concatSrcJsFile))
 			.pipe(gulp.dest(c.distScripts))
 			.pipe(reload({stream: true, once: true}))
@@ -35,7 +36,7 @@ gulp.task("app:build:js:src", function(callback) {
                     c.concatSrcJsFile
                 ]))
                 .pipe($.concat(c.concatSrcJsFile))
-                .pipe($.if(c.production, $.uglify(c.uglifyConfig), $.jsPrettify()))
+                .pipe($.if(c.production, $.uglify(c.srcUglifyConfig), $.jsPrettify()))
                 .pipe(
                     $.header(
                         "/*!\r\n * " + c.copyrightBanner.join("\r\n * ") + "\r\n*/\r\n",
@@ -58,8 +59,9 @@ gulp.task("app:build:js:vendor", function(){
 			errorHandler: c.onError
 		}))
 		.pipe($.concat(c.concatVendorJsFile))
-		.pipe($.uglify(c.uglifyConfig))
+		.pipe($.uglify(c.vendorUglifyConfig))
 		.pipe(gulp.dest(c.distScripts))
 		.pipe(reload({stream: true, once: true}))
+		.pipe($.if(c.debug, $.filelog()))
 		.pipe($.size({title: "app:build:js:vendor"}));
 });
