@@ -54,5 +54,6 @@ module.exports = {
 		"@license <%= packageFile.license %>",
 		"@revision <%= gitRev %>"
 	],
-	packageFile: require("../package.json")
+	packageFile: require("../package.json"),
+	jsPolyfillsFile: gulpConfig.filenameSettings.jsPolyfillsFile
 };
