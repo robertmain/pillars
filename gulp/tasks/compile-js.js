@@ -10,23 +10,20 @@ var gulp = require("gulp"),
 	});
 
 gulp.task("app:build:js:src", function(callback) {
-	git.short(function(rev){
-		var srcStream = gulp.src(c.srcJs)
-			.pipe($.plumber({
-				errorHandler: c.onError
-			}))
-			.pipe($.order([
-				"app.js",
-				"app-*.js"
-			]))
-			.pipe($.if(c.production, $.stripDebug()))
-			.pipe($.if(c.production, $.complexity({breakOnErrors: false})))
-			.pipe($.if(c.debug, $.filelog()))
-			.pipe($.concat(c.concatSrcJsFile))
-			.pipe(gulp.dest(c.distScripts))
-			.pipe(reload({stream: true, once: true}))
-			.pipe($.size({title: "app:build:js:src"}));
-		
+    git.short(function(rev){
+        var srcStream = gulp.src(c.srcScripts + "/*.js")
+        .pipe($.plumber({
+            errorHandler: c.onError
+        }))
+        .pipe($.order([
+            "app.js",
+            "app-*.js"
+        ]))
+        .pipe($.if(c.production, $.stripDebug()))
+        .pipe($.if(!c.production, $.complexity({breakOnErrors: false})))
+        .pipe($.if(c.debug, $.filelog()))
+        .pipe($.size({title: "app:build:js:src"}));
+ 
         var polyfillStream = srcStream.pipe($.autopolyfiller(c.jsPolyfillsFile, {
             browsers: c.prefixBrowsers
         }));
@@ -35,8 +32,9 @@ gulp.task("app:build:js:src", function(callback) {
                     c.jsPolyfillsFile,
                     c.concatSrcJsFile
                 ]))
+                .pipe($.if(c.debug, $.filelog()))
                 .pipe($.concat(c.concatSrcJsFile))
-                .pipe($.if(c.production, $.uglify(c.srcUglifyConfig), $.jsPrettify()))
+                .pipe($.if(c.production, $.uglify(c.uglifyConfig), $.jsPrettify()))
                 .pipe(
                     $.header(
                         "/*!\r\n * " + c.copyrightBanner.join("\r\n * ") + "\r\n*/\r\n",
@@ -50,7 +48,7 @@ gulp.task("app:build:js:src", function(callback) {
                 .pipe(gulp.dest(c.distScripts))
                 .pipe(reload({stream: true, once: true}))
             );
-	});
+    });
 });
 
 gulp.task("app:build:js:vendor", function(){
