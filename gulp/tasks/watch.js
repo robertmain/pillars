@@ -11,11 +11,3 @@ gulp.task("__app:watch", function() {
 	gulp.watch(c.src + "/**/*.{" + c.otherMyTypes + "}", ["__app:copy:files"]);
 	gulp.watch(c.bowerComponents, ["app:build"]);
 });
-/*
-gulp.task("__app:reload:html", function(){
-	return gulp.src(c.htmlFiles)
-	.pipe($.changed(c.htmlFiles))
-	.pipe(reload({stream: true}))
-	;
-});
-*/

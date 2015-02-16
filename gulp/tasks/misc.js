@@ -21,7 +21,6 @@ gulp.task("__app:copy:files", function() {
 });
 
 gulp.task("__app:install:dependencies", function(callback){
-	//$.shell.task(["bower install"]);
 	bower.commands.install()
 		.on("end", function () {
 			callback();
