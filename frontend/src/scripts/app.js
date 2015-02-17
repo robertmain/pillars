@@ -5,12 +5,13 @@
 		"pillars.controllers",
 		"pillars.filters",
 		"ui.router",
-		"ngMaterial"
+		"ngMaterial",
+		"angular-gestures"
 	])
 
 	.config(["$stateProvider", "$urlRouterProvider", "$httpProvider", "$provide", "$locationProvider", "$mdThemingProvider", function($stateProvider, $urlRouterProvider, $httpProvider, $provide, $locationProvider, $mdThemingProvider){
 		$mdThemingProvider.theme("default")
-			.primaryPalette("blue");
+			.primaryPalette("indigo");
 		$stateProvider
 			.state("index", {
 				controller: "MainCtrl",

@@ -9,6 +9,10 @@
     "angular-mocks": "~1.3.6",
     "angular": "~1.3.5",
     "angular-material": "~0.7.1",
-    "angular-material-icons": "~0.4.0"
+    "angular-material-icons": "~0.4.0",
+    "angular-gestures": "~0.3.0"
+  },
+  "resolutions": {
+    "angular": "1.3.x"
   }
 }

@@ -5,9 +5,6 @@
 
 	.controller("MainCtrl", [function(){
 		var self = this;
-		self.frameworkName = "Pillars";
-		self.title = self.frameworkName;
-		self.tagline = "Your Starting Framework For Every Web Project";
-		self.date = new Date();
+		//Your app code goes here
 	}]);
 }());
