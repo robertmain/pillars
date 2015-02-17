@@ -15,6 +15,7 @@ gulp.task("__app:copy:files", function() {
 		"!" + c.srcScripts + "/**/*.*",
 		"!" + c.srcStyles + "/**/*.*"
 	])
+	.pipe($.if(c.debug, $.filelog("__app:copy:files")))
 	.pipe(gulp.dest(c.dist))
 	.pipe(reload({stream: true, once: true}))
 	.pipe($.size({title: "__app:copy:files"}));

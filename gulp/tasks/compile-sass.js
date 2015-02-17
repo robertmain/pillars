@@ -5,6 +5,7 @@ var gulp = require("gulp"),
 	git = require("git-rev"),
 	reload = require("browser-sync").reload,
 	mainBowerFiles = require("main-bower-files"),
+	path = require("path"),
 	$ = require("gulp-load-plugins")({
 		camelize: true
 	});
@@ -27,6 +28,7 @@ gulp.task("app:build:style:src", function(callback) {
 			}))
 			.pipe($.if(!c.production, $.cssbeautify()))
 			.pipe($.autoprefixer(c.prefixBrowsers, {cascade: true}))
+			.pipe($.if(c.debug, $.filelog("app:build:style:src")))
 			.pipe($.concat(c.concatSrcCSSFile))
 			.pipe(
 				$.header(

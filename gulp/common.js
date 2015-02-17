@@ -2,7 +2,7 @@
 
 var gulpConfig = require(__dirname + "/config.json"),
 	argv = require("yargs").argv,
-	PrettyError = require("pretty-error"),
+	// PrettyError = require("pretty-error"), -- Commented out until renderkid cuntpastes his untested code out.
 	appConfig = require(__dirname + "/../config.js");
 
 var src = gulpConfig.folderSettings.src;
@@ -35,12 +35,24 @@ module.exports = {
 
 	//Misc
 	production: Boolean(argv.production),
+	debug: Boolean(argv.debug),
 	onError: function(error) {
+		/*
+		-- Commented out until renderkid cuntpastes his untested shit out.
 		var pe = new PrettyError();
 		pe.skipNodeFiles();
 		console.log(pe.render(error));
+		*/
+		console.log(error);
 	},
-	uglifyConfig: {
+	srcUglifyConfig: {
+		mangle: true,
+		preserveComments: "none",
+		output: {
+			beautify: false
+		}
+	},
+	vendorUglifyConfig: {
 		mangle: true,
 		preserveComments: "some",
 		output: {

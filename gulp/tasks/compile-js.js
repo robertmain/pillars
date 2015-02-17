@@ -5,13 +5,14 @@ var gulp = require("gulp"),
 	git = require("git-rev"),
 	reload = require("browser-sync").reload,
 	mainBowerFiles = require("main-bower-files"),
+	merge = require("event-stream").merge,
 	$ = require("gulp-load-plugins")({
 		camelize: true
 	});
 
 gulp.task("app:build:js:src", function(callback) {
 	git.short(function(rev){
-		var srcStream = gulp.src(c.srcScripts + "/**/*.js")
+		var srcStream = gulp.src(c.srcScripts + "/*.js")
 			.pipe($.plumber({
 				errorHandler: c.onError
 			}))
@@ -20,35 +21,36 @@ gulp.task("app:build:js:src", function(callback) {
 				"app-*.js"
 			]))
 			.pipe($.if(c.production, $.stripDebug()))
-			.pipe($.if(c.production, $.complexity({breakOnErrors: false})))
+			.pipe($.if(!c.production, $.complexity({breakOnErrors: false})))
+			.pipe($.if(c.debug, $.filelog("app:build:js:src")))
 			.pipe($.concat(c.concatSrcJsFile))
-			.pipe(gulp.dest(c.distScripts))
-			.pipe(reload({stream: true, once: true}))
 			.pipe($.size({title: "app:build:js:src"}));
-		
-        var polyfillStream = srcStream.pipe($.autopolyfiller(c.jsPolyfillsFile, {
-            browsers: c.prefixBrowsers
-        }));
-        callback(null, $.merge(polyfillStream, srcStream)
-                .pipe($.order([
-                    c.jsPolyfillsFile,
-                    c.concatSrcJsFile
-                ]))
-                .pipe($.concat(c.concatSrcJsFile))
-                .pipe($.if(c.production, $.uglify(c.uglifyConfig), $.jsPrettify()))
-                .pipe(
-                    $.header(
-                        "/*!\r\n * " + c.copyrightBanner.join("\r\n * ") + "\r\n*/\r\n",
-                        {
-                            packageFile: c.packageFile,
-                            gitRev: rev,
-                            d: new Date()
-                        }
-                    )
-                )
-                .pipe(gulp.dest(c.distScripts))
-                .pipe(reload({stream: true, once: true}))
-            );
+ 
+		var polyfillStream = srcStream.pipe($.autopolyfiller(c.jsPolyfillsFile, {
+			browsers: c.prefixBrowsers
+		})).pipe($.if(c.debug, $.filelog("app:build:js:polyfill")));
+
+		var pipe = merge(polyfillStream, srcStream)
+			.pipe($.order([
+				c.jsPolyfillsFile,
+				c.concatSrcJsFile
+			]))
+			.pipe($.if(c.debug, $.filelog("app:build:js:src:polyfilled")))
+			.pipe($.concat(c.concatSrcJsFile))
+			.pipe($.if(c.production, $.uglify(c.uglifyConfig), $.jsPrettify()))
+			.pipe(
+				$.header(
+					"/*!\r\n * " + c.copyrightBanner.join("\r\n * ") + "\r\n*/\r\n",
+					{
+						packageFile: c.packageFile,
+						gitRev: rev,
+						d: new Date()
+					}
+				)
+			)
+			.pipe(gulp.dest(c.distScripts))
+			.pipe(reload({stream: true, once: true}));
+		callback(null, pipe);
 	});
 });
 
@@ -58,8 +60,9 @@ gulp.task("app:build:js:vendor", function(){
 			errorHandler: c.onError
 		}))
 		.pipe($.concat(c.concatVendorJsFile))
-		.pipe($.uglify(c.uglifyConfig))
+		.pipe($.uglify(c.vendorUglifyConfig))
 		.pipe(gulp.dest(c.distScripts))
 		.pipe(reload({stream: true, once: true}))
+		.pipe($.if(c.debug, $.filelog("app:build:js:vendor")))
 		.pipe($.size({title: "app:build:js:vendor"}));
 });
