@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="pillars" ng-controller="MainCtrl as ctrl">
 	<head>
-		<title>Welcome to {{ctrl.frameworkName}}</title>
+		<title>Welcome to Pillars</title>
 		<base href="/"></base>
 		<link rel="stylesheet" type="text/css" href="styles/vendor.css" />
 		<link rel="stylesheet" type="text/css" href="styles/src.css" />
@@ -16,10 +16,26 @@
 			</md-toolbar>
 			<md-content class="md-padding" >
 				<md-list>
-					<md-item ng-repeat="item in [1,2,3,4]">
+					<md-item>
 						<md-item-content>
 							<div class="md-tile-content">
-								<h3>Test</h3>
+								<h3>Getting Started</h3>
+							</div>
+						</md-item-content>
+						<md-divider ng-if="!$last"></md-divider>
+					</md-item>
+					<md-item>
+						<md-item-content>
+							<div class="md-tile-content">
+								<h3>Quick Command Reference</h3>
+							</div>
+						</md-item-content>
+						<md-divider ng-if="!$last"></md-divider>
+					</md-item>
+					<md-item>
+						<md-item-content>
+							<div class="md-tile-content">
+								<h3>Client Side Dependencies</h3>
 							</div>
 						</md-item-content>
 						<md-divider ng-if="!$last"></md-divider>
@@ -30,9 +46,7 @@
 		<div layout="column" layout-fill>
 			<md-toolbar md-scroll-shrink>
 				<div class="md-toolbar-tools">
-					<h3>
-						<span>Docs</span>
-					</h3>
+					<h3><span>Documentation</span></h3>
 				</div>
 			</md-toolbar>
 		</div>
