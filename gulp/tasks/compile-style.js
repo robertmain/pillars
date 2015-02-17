@@ -51,7 +51,7 @@ gulp.task("app:build:style:src", function(callback) {
 
 gulp.task("app:build:style:vendor", function() {
 	var urlRewriter = function(rewriteurl, filename){
-		var absUrl = path.resolve(filename, rewriteurl);
+		var absUrl = path.resolve(path.dirname(filename), rewriteurl);
 		var rootRelative = path.relative(c.bowerComponents, absUrl);
 		rootRelative = rootRelative.replace(/\\/g, "/");
 		var fileUrl = url.parse(rootRelative);
@@ -68,7 +68,7 @@ gulp.task("app:build:style:vendor", function() {
 		.pipe($.if(c.debug, $.filelog("app:build:style:vendor")))
 		.pipe($.sass({
 			includePaths: require("node-neat").with(require("node-bourbon").includePaths),
-			outputStyle: "compressed",
+			outputStyle: "expanded",
 			onError: c.onError
 		}))
 		.pipe($.cssUrlAdjuster({ replace: urlRewriter }))
