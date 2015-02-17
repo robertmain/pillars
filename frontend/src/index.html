@@ -9,36 +9,36 @@
 		<script src="scripts/vendor.js"></script>
 		<script src="scripts/src.js"></script>
 	</head>
-	<body layout="row">
+	<body layout="row" ng-controller="MainCtrl">
 		<md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2 md-closed ng-isolate-scope md-locked-open" md-component-id="left" md-is-locked-open="$media('gt-sm')" tabindex="-1">
 			<md-toolbar>
-				<h1 class="md-toolbar-tools"><i class="glyphicon glyphicon-cloud"></i>Pillars</h1>
+				<h1 class="md-toolbar-tools">Pillars</h1>
 			</md-toolbar>
 			<md-content class="md-padding" >
 				<md-list>
 					<md-item>
 						<md-item-content>
 							<div class="md-tile-content">
-								<h3>Getting Started</h3>
+								<h4>Getting Started</h4>
 							</div>
 						</md-item-content>
-						<md-divider ng-if="!$last"></md-divider>
+						<md-divider></md-divider>
 					</md-item>
 					<md-item>
 						<md-item-content>
 							<div class="md-tile-content">
-								<h3>Quick Command Reference</h3>
+								<h4>Quick Command Reference</h4>
 							</div>
 						</md-item-content>
-						<md-divider ng-if="!$last"></md-divider>
+						<md-divider></md-divider>
 					</md-item>
 					<md-item>
 						<md-item-content>
 							<div class="md-tile-content">
-								<h3>Client Side Dependencies</h3>
+								<h4>Client Side Dependencies</h4>
 							</div>
 						</md-item-content>
-						<md-divider ng-if="!$last"></md-divider>
+						<md-divider></md-divider>
 					</md-item>
 				</md-list>
 			</md-content>
@@ -49,6 +49,9 @@
 					<h3><span>Documentation</span></h3>
 				</div>
 			</md-toolbar>
+			<md-content class="md-padding">
+
+			</md-content>
 		</div>
 	</body>
 </html>

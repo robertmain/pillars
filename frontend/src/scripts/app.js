@@ -13,10 +13,13 @@
 		$mdThemingProvider.theme("default")
 			.primaryPalette("indigo");
 		$stateProvider
-			.state("index", {
+			.state("app", {
 				controller: "MainCtrl",
 				templateUrl: "views/home.html",
 				url: "/"
+			})
+			.state("app.content", {
+				
 			})
 			//Your Custom Routes Go Here
 			.state("404", {
@@ -27,6 +30,6 @@
 	}])
 
 	.run(["$state", function($state){
-		$state.go("index"); //Display the index page on start (redirect to the "app" state)
+		$state.go("app"); //Display the app page on start (redirect to the "app" state)
 	}]);
 })();
