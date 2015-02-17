@@ -15,6 +15,7 @@ module.exports = {
 	dist: dist,
 	imageFileTypes: gulpConfig.fileTypes.images.join(","),
 	otherMyTypes: gulpConfig.fileTypes.fonts.concat(gulpConfig.fileTypes.images).join(","),
+	fontTypes: gulpConfig.fileTypes.fonts,
 	srcStyles: src + "/" + gulpConfig.folderSettings.styles,
 	distStyles: dist + "/" + gulpConfig.folderSettings.styles,
 	srcScripts: src + "/" + gulpConfig.folderSettings.scripts,

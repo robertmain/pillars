@@ -10,8 +10,9 @@ var gulp = require("gulp"),
 	});
 
 gulp.task("__app:copy:fonts", function(){
+	var re = new RegExp("\\.(" + c.fontTypes.join("|") + ")$", "i");
 	return gulp.src(
-			mainBowerFiles({filter: /\.(woff|svg|ttf|eot)$/i}),
+			mainBowerFiles({filter: re}),
 			{ base: c.bowerComponents }
 		)
 		.pipe($.filelog("__app:copy:fonts"))
