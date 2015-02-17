@@ -3,10 +3,20 @@
 var gulp = require("gulp"),
 	c = require("../common.js"),
 	reload = require("browser-sync").reload,
+	mainBowerFiles = require("main-bower-files"),
 	bower = require("bower"),
 	$ = require("gulp-load-plugins")({
 		camelize: true
 	});
+
+gulp.task("__app:copy:fonts", function(){
+	return gulp.src(
+			mainBowerFiles({filter: /\.(woff|svg|ttf|eot)$/i}),
+			{ base: c.bowerComponents }
+		)
+		.pipe($.filelog("__app:copy:fonts"))
+		.pipe(gulp.dest(c.distFonts));
+});
 
 gulp.task("__app:copy:files", function() {
 	return gulp.src([

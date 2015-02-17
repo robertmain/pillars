@@ -24,6 +24,7 @@ gulp.task("app:build", function(callback) {
 			"app:build:style:vendor",
 			"app:build:html:src",
 			"__app:copy:files",
+			"__app:copy:fonts",
 			"app:build:js:vendor",
 			"app:build:js:src"
 		],

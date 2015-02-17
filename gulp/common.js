@@ -21,6 +21,7 @@ module.exports = {
 	distScripts: dist + "/" + gulpConfig.folderSettings.scripts,
 	srcImages: src + "/" + gulpConfig.folderSettings.images,
 	distImages: dist + "/" + gulpConfig.folderSettings.images,
+	distFonts: dist + "/" + gulpConfig.folderSettings.fonts,
 	concatSrcCSSFile: gulpConfig.filenameSettings.concatSrcCSSFile,
 	concatVendorCSSFile: gulpConfig.filenameSettings.concatVendorCSSFile,
 	concatSrcJsFile: gulpConfig.filenameSettings.concatSrcJsFile,

@@ -2,6 +2,7 @@
 	"folderSettings": {
 		"src": "frontend/src",
 		"dist": "frontend/build",
+		"fonts": "fonts",
 		"images": "images",
 		"scripts": "scripts",
 		"styles": "styles",
