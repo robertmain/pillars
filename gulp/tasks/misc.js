@@ -15,7 +15,7 @@ gulp.task("__app:copy:fonts", function(){
 			mainBowerFiles({filter: re}),
 			{ base: c.bowerComponents }
 		)
-		.pipe($.filelog("__app:copy:fonts"))
+		.pipe($.if(c.debug, $.filelog("__app:copy:fonts")))
 		.pipe(gulp.dest(c.distFonts));
 });
 
