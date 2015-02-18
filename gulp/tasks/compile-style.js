@@ -66,12 +66,12 @@ gulp.task("app:build:style:vendor", function() {
 			errorHandler: c.onError
 		}))
 		.pipe($.if(c.debug, $.filelog("app:build:style:vendor")))
+		.pipe($.cssUrlAdjuster({ replace: urlRewriter }))
 		.pipe($.sass({
 			includePaths: require("node-neat").with(require("node-bourbon").includePaths),
-			outputStyle: "expanded",
+			outputStyle: "compressed",
 			onError: c.onError
 		}))
-		.pipe($.cssUrlAdjuster({ replace: urlRewriter }))
 		.pipe($.autoprefixer(c.prefixBrowsers, {cascade: true}))
 		.pipe($.concat(c.concatVendorCSSFile))
 		.pipe(gulp.dest(c.distStyles))
