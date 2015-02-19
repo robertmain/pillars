@@ -3,10 +3,21 @@
 var gulp = require("gulp"),
 	c = require("../common.js"),
 	reload = require("browser-sync").reload,
+	mainBowerFiles = require("main-bower-files"),
 	bower = require("bower"),
 	$ = require("gulp-load-plugins")({
 		camelize: true
 	});
+
+gulp.task("__app:copy:fonts", function(){
+	var re = new RegExp("\\.(" + c.fontTypes.join("|") + ")$", "i");
+	return gulp.src(
+			mainBowerFiles({filter: re}),
+			{ base: c.bowerComponents }
+		)
+		.pipe($.if(c.debug, $.filelog("__app:copy:fonts")))
+		.pipe(gulp.dest(c.distFonts));
+});
 
 gulp.task("__app:copy:files", function() {
 	return gulp.src([

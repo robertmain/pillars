@@ -2,6 +2,7 @@
 	"folderSettings": {
 		"src": "frontend/src",
 		"dist": "frontend/build",
+		"fonts": "fonts",
 		"images": "images",
 		"scripts": "scripts",
 		"styles": "styles",
@@ -30,7 +31,7 @@
 	},
 	"fileTypes": {
 		"pages": ["html"],
-		"fonts": ["eot", "svg", "ttf", "woff"],
+		"fonts": ["eot", "svg", "ttf", "woff", "woff2"],
 		"images": ["jpg", "JPG", "png", "PNG"],
 		"scripts": ["js"],
 		"styles": ["css", "scss"]

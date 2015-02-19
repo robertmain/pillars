@@ -2,10 +2,12 @@
 
 var gulp = require("gulp"),
 	c = require("../common.js"),
+	config = require("../config.json"),
 	git = require("git-rev"),
 	reload = require("browser-sync").reload,
 	mainBowerFiles = require("main-bower-files"),
 	path = require("path"),
+	url = require("url"),
 	$ = require("gulp-load-plugins")({
 		camelize: true
 	});
@@ -48,10 +50,23 @@ gulp.task("app:build:style:src", function(callback) {
 });
 
 gulp.task("app:build:style:vendor", function() {
+	var urlRewriter = function(rewriteurl, filename){
+		var absUrl = path.resolve(path.dirname(filename), rewriteurl);
+		var rootRelative = path.relative(c.bowerComponents, absUrl);
+		rootRelative = rootRelative.replace(/\\/g, "/");
+		var fileUrl = url.parse(rootRelative);
+		if(config.fileTypes.fonts.indexOf(path.extname(fileUrl.pathname).substr(1)) !== -1){
+			return "/" + config.folderSettings.fonts + "/" + rootRelative;
+		}
+		return rewriteurl;
+	};
+
 	return gulp.src(mainBowerFiles({filter: /\.(s?css)$/i}))
 		.pipe($.plumber({
 			errorHandler: c.onError
 		}))
+		.pipe($.if(c.debug, $.filelog("app:build:style:vendor")))
+		.pipe($.cssUrlAdjuster({ replace: urlRewriter }))
 		.pipe($.sass({
 			includePaths: require("node-neat").with(require("node-bourbon").includePaths),
 			outputStyle: "compressed",

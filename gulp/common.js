@@ -2,7 +2,7 @@
 
 var gulpConfig = require(__dirname + "/config.json"),
 	argv = require("yargs").argv,
-	// PrettyError = require("pretty-error"), -- Commented out until renderkid cuntpastes his untested code out.
+	PrettyError = require("pretty-error"),
 	appConfig = require(__dirname + "/../config.js");
 
 var src = gulpConfig.folderSettings.src;
@@ -15,12 +15,14 @@ module.exports = {
 	dist: dist,
 	imageFileTypes: gulpConfig.fileTypes.images.join(","),
 	otherMyTypes: gulpConfig.fileTypes.fonts.concat(gulpConfig.fileTypes.images).join(","),
+	fontTypes: gulpConfig.fileTypes.fonts,
 	srcStyles: src + "/" + gulpConfig.folderSettings.styles,
 	distStyles: dist + "/" + gulpConfig.folderSettings.styles,
 	srcScripts: src + "/" + gulpConfig.folderSettings.scripts,
 	distScripts: dist + "/" + gulpConfig.folderSettings.scripts,
 	srcImages: src + "/" + gulpConfig.folderSettings.images,
 	distImages: dist + "/" + gulpConfig.folderSettings.images,
+	distFonts: dist + "/" + gulpConfig.folderSettings.fonts,
 	concatSrcCSSFile: gulpConfig.filenameSettings.concatSrcCSSFile,
 	concatVendorCSSFile: gulpConfig.filenameSettings.concatVendorCSSFile,
 	concatSrcJsFile: gulpConfig.filenameSettings.concatSrcJsFile,
@@ -37,13 +39,9 @@ module.exports = {
 	production: Boolean(argv.production),
 	debug: Boolean(argv.debug),
 	onError: function(error) {
-		/*
-		-- Commented out until renderkid cuntpastes his untested shit out.
 		var pe = new PrettyError();
 		pe.skipNodeFiles();
 		console.log(pe.render(error));
-		*/
-		console.log(error);
 	},
 	srcUglifyConfig: {
 		mangle: true,
