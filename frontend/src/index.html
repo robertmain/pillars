@@ -14,31 +14,15 @@
 			<md-toolbar>
 				<h1 class="md-toolbar-tools">Pillars</h1>
 			</md-toolbar>
-			<md-content class="md-padding" >
+			<md-content class="md-padding" ng-controller="SidebarCtrl as sidebar">
 				<md-list>
-					<md-item>
+					<md-item ng-click="sidebar.setCurrent($index)" ng-repeat="page in sidebar.pages track by $index">
 						<md-item-content>
 							<div class="md-tile-content">
-								<h4>Getting Started</h4>
+								<h3>{{page.title}}</h3>
 							</div>
 						</md-item-content>
-						<md-divider></md-divider>
-					</md-item>
-					<md-item>
-						<md-item-content>
-							<div class="md-tile-content">
-								<h4>Quick Command Reference</h4>
-							</div>
-						</md-item-content>
-						<md-divider></md-divider>
-					</md-item>
-					<md-item>
-						<md-item-content>
-							<div class="md-tile-content">
-								<h4>Client Side Dependencies</h4>
-							</div>
-						</md-item-content>
-						<md-divider></md-divider>
+						<md-divider ng-if="!$last"></md-divider>
 					</md-item>
 				</md-list>
 			</md-content>
@@ -50,7 +34,7 @@
 				</div>
 			</md-toolbar>
 			<md-content class="md-padding">
-				
+				<h1>Getting Started</h1>
 			</md-content>
 		</div>
 	</body>

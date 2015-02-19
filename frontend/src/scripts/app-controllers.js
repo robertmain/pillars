@@ -3,8 +3,10 @@
 
 	angular.module("pillars.controllers", [])
 
-	.controller("MainCtrl", [function(){
+	.controller("MainCtrl", function(){var self = this;})
+	.controller("SidebarCtrl", ["Page", function(Page){
 		var self = this;
-		//Your app code goes here
+		self.pages = Page.all();
+		self.setCurrent = Page.setCurrent;
 	}]);
 }());
