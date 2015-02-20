@@ -66,6 +66,7 @@ gulp.task("app:build:style:vendor", function() {
 			errorHandler: c.onError
 		}))
 		.pipe($.if(c.debug, $.filelog("app:build:style:vendor")))
+		.pipe($.cssUrlAdjuster({ replace: urlRewriter }))
 		.pipe($.sass({
 			includePaths: require("node-neat").with(require("node-bourbon").includePaths),
 			outputStyle: "compressed",
