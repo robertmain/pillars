@@ -17,16 +17,16 @@ gulp.task("__app:clean:project", function() {
 });
 
 gulp.task("__app:clean:css", function(){
-	return gulp.src([c.dist + "**/*.css"], {read: false})
+	return gulp.src([c.distStylesGlob], {read: false})
 		.pipe(vinylPaths(del));
 });
 
 gulp.task("__app:clean:js", function(){
-	return gulp.src([c.dist + "**/*.js"], {read: false})
+	return gulp.src([c.distScriptsGlob], {read: false})
 		.pipe(vinylPaths(del));
 });
 
 gulp.task("__app:clean:images", function(){
-	return gulp.src([c.dist + "**/*.{" + c.imageFileTypes + "}"], {read: false})
+	return gulp.src([c.distImagesGlob], {read: false})
 		.pipe(vinylPaths(del));
 });

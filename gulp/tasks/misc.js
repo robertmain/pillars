@@ -10,22 +10,17 @@ var gulp = require("gulp"),
 	});
 
 gulp.task("__app:copy:fonts", function(){
-	var re = new RegExp("\\.(" + c.fontTypes.join("|") + ")$", "i");
 	return gulp.src(
-			mainBowerFiles({filter: re}),
+			mainBowerFiles({filter: c.fontsRegex}),
 			{ base: c.bowerComponents }
 		)
 		.pipe($.if(c.debug, $.filelog("__app:copy:fonts")))
-		.pipe(gulp.dest(c.distFonts));
+		.pipe(gulp.dest(c.fontsDist));
 });
 
+//This task matches empty directories so we exclude directories and only take files
 gulp.task("__app:copy:files", function() {
-	return gulp.src([
-		c.src + "/**/*.{" + c.otherMyTypes + "}",
-		"!" + c.src + "/" + "/*." + c.pageFileTypes,
-		"!" + c.srcScripts + "/**/*.*",
-		"!" + c.srcStyles + "/**/*.*"
-	])
+	return gulp.src(c.otherFilesSrc, {nodir: true})
 	.pipe($.if(c.debug, $.filelog("__app:copy:files")))
 	.pipe(gulp.dest(c.dist))
 	.pipe(reload({stream: true, once: true}))

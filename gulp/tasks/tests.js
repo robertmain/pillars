@@ -8,8 +8,8 @@ var gulp = require("gulp"),
 
 gulp.task("__app:test:js", function(){
 	return gulp.src([
-		c.distScripts + "/" + c.concatVendorJsFile,
-		c.distScripts + "/" + c.concatSrcJsFile,
+		c.scriptsDist + "/" + c.concatVendorJsFile,
+		c.scriptsDist + "/" + c.concatSrcJsFile,
 		"test/frontend/**/*.test.js"
 	])
 		.pipe($.karma({

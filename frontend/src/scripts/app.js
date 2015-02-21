@@ -3,7 +3,6 @@
 
 	angular.module("pillars", [
 		"pillars.controllers",
-		"pillars.services",
 		"pillars.filters",
 		"ui.router",
 		"ngMaterial",
