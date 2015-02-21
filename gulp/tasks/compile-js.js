@@ -12,7 +12,7 @@ var gulp = require("gulp"),
 
 gulp.task("app:build:js:src", function(callback) {
 	git.short(function(rev){
-		var srcStream = gulp.src(c.srcScripts + "/*.js")
+		var srcStream = gulp.src(c.scriptsSrcGlob)
 			.pipe($.plumber({
 				errorHandler: c.onError
 			}))
@@ -25,7 +25,7 @@ gulp.task("app:build:js:src", function(callback) {
 			.pipe($.if(c.debug, $.filelog("app:build:js:src")))
 			.pipe($.concat(c.concatSrcJsFile))
 			.pipe($.size({title: "app:build:js:src"}));
- 
+
 		var polyfillStream = srcStream.pipe($.autopolyfiller(c.jsPolyfillsFile, {
 			browsers: c.prefixBrowsers
 		})).pipe($.if(c.debug, $.filelog("app:build:js:polyfill")));
@@ -48,20 +48,21 @@ gulp.task("app:build:js:src", function(callback) {
 					}
 				)
 			)
-			.pipe(gulp.dest(c.distScripts))
-			.pipe(reload({stream: true, once: true}));
-		callback(null, pipe);
+			.pipe(gulp.dest(c.scriptsDist));
+
+		pipe.on("end", callback);
+		pipe.pipe(reload({stream: true, once: true}));
 	});
 });
 
 gulp.task("app:build:js:vendor", function(){
-	return gulp.src(mainBowerFiles({filter: /\.(js)$/i}))
+	return gulp.src(mainBowerFiles({filter: c.scriptsRegex}))
 		.pipe($.plumber({
 			errorHandler: c.onError
 		}))
 		.pipe($.concat(c.concatVendorJsFile))
 		.pipe($.uglify(c.vendorUglifyConfig))
-		.pipe(gulp.dest(c.distScripts))
+		.pipe(gulp.dest(c.scriptsDist))
 		.pipe(reload({stream: true, once: true}))
 		.pipe($.if(c.debug, $.filelog("app:build:js:vendor")))
 		.pipe($.size({title: "app:build:js:vendor"}));

@@ -14,12 +14,12 @@ var gulp = require("gulp"),
 
 gulp.task("app:build:style:src", function(callback) {
 	git.short(function(rev){
-		var sassFiles = mainBowerFiles({filter: /\.(scss)$/i});
+		var sassFiles = mainBowerFiles({filter: c.stylesRegex});
 		var sassDirectories = [];
 		sassFiles.forEach(function(sassFile){
 			sassDirectories.push(path.dirname(sassFile));
 		});
-		var pipe = gulp.src(c.srcStyles + "/**/*.scss")
+		var pipe = gulp.src(c.stylesSrcGlob)
 			.pipe($.plumber({
 				errorHandler: c.onError
 			}))
@@ -42,10 +42,10 @@ gulp.task("app:build:style:src", function(callback) {
 					}
 				)
 			)
-			.pipe(gulp.dest(c.distStyles))
-			.pipe(reload({stream: true, once: true}))
+			.pipe(gulp.dest(c.stylesDist))
 			.pipe($.size({title: "app:build:style:src"}));
-		callback(null, pipe);
+		pipe.on("end", callback);
+		pipe.pipe(reload({stream: true, once: true}));
 	});
 });
 
@@ -61,7 +61,7 @@ gulp.task("app:build:style:vendor", function() {
 		return rewriteurl;
 	};
 
-	return gulp.src(mainBowerFiles({filter: /\.(s?css)$/i}))
+	return gulp.src(mainBowerFiles({filter: c.stylesRegex}))
 		.pipe($.plumber({
 			errorHandler: c.onError
 		}))
@@ -75,7 +75,7 @@ gulp.task("app:build:style:vendor", function() {
 		.pipe($.cssUrlAdjuster({replace: urlRewriter}))
 		.pipe($.autoprefixer({browsers: c.prefixBrowsers, cascade: true}))
 		.pipe($.concat(c.concatVendorCSSFile))
-		.pipe(gulp.dest(c.distStyles))
+		.pipe(gulp.dest(c.stylesDist))
 		.pipe(reload({stream: true, once: true}))
 		.pipe($.size({title: "app:build:style:vendor"}));
 });

@@ -9,7 +9,7 @@
     "express": "latest"
   },
   "devDependencies": {
-    "browser-sync": "~1.7.2",
+    "browser-sync": "~2.0.0",
     "del": "~1.1.1",
     "event-stream": "^3.2.2",
     "git-rev": "^0.2.1",

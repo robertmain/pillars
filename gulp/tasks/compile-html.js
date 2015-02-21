@@ -10,7 +10,7 @@ var gulp = require("gulp"),
 
 gulp.task("app:build:html:src", function(callback){
 	git.short(function(rev){
-		var pipe = gulp.src(c.src + "/**/*.html")
+		var pipe = gulp.src(c.pagesSrcGlob)
 			.pipe(
 				$.if(c.production,
 					$.minifyHtml({
@@ -33,8 +33,8 @@ gulp.task("app:build:html:src", function(callback){
 				)
 			)
 			.pipe($.if(c.debug, $.filelog("app:build:html:src")))
-			.pipe(gulp.dest(c.dist))
-			.pipe(reload({stream: true}));
-		callback(null, pipe);
+			.pipe(gulp.dest(c.dist));
+		pipe.on("end", callback);
+		pipe.pipe(reload({stream: true}));
 	});
 });
