@@ -22,6 +22,7 @@ gulp.task("app:build", function(callback) {
 		[
 			"app:build:style:src",
 			"app:build:style:vendor",
+			"app:build:images:src",
 			"app:build:html:src",
 			"__app:copy:files",
 			"__app:copy:fonts",
