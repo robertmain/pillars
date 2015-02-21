@@ -3,6 +3,7 @@
 
 	angular.module("pillars", [
 		"pillars.controllers",
+		"pillars.services",
 		"pillars.filters",
 		"ui.router",
 		"ngMaterial",
@@ -19,7 +20,7 @@
 				url: "/"
 			})
 			.state("app.content", {
-				
+
 			})
 			//Your Custom Routes Go Here
 			.state("404", {

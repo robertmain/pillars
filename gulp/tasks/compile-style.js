@@ -29,7 +29,7 @@ gulp.task("app:build:style:src", function(callback) {
 				onError: c.onError
 			}))
 			.pipe($.if(!c.production, $.cssbeautify()))
-			.pipe($.autoprefixer(c.prefixBrowsers, {cascade: true}))
+			.pipe($.autoprefixer({browsers: c.prefixBrowsers, cascade: !c.production}))
 			.pipe($.if(c.debug, $.filelog("app:build:style:src")))
 			.pipe($.concat(c.concatSrcCSSFile))
 			.pipe(
@@ -72,7 +72,8 @@ gulp.task("app:build:style:vendor", function() {
 			outputStyle: "compressed",
 			onError: c.onError
 		}))
-		.pipe($.autoprefixer(c.prefixBrowsers, {cascade: true}))
+		.pipe($.cssUrlAdjuster({replace: urlRewriter}))
+		.pipe($.autoprefixer({browsers: c.prefixBrowsers, cascade: true}))
 		.pipe($.concat(c.concatVendorCSSFile))
 		.pipe(gulp.dest(c.distStyles))
 		.pipe(reload({stream: true, once: true}))
