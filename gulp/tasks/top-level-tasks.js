@@ -31,7 +31,7 @@ gulp.task("app:build", function(callback) {
 		],
 	];
 
-	if(!c.production){
+	if(!c.production && c.tests.unit){
 		buildTasks.push("__app:test:js");
 	}
 	buildTasks.push(callback);
