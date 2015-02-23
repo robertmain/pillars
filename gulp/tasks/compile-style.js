@@ -25,11 +25,10 @@ gulp.task("app:build:style:src", function(callback) {
 			}))
 			.pipe($.sass({
 				includePaths: sassDirectories,
-				outputStyle: "compressed",
 				onError: c.onError
 			}))
-			.pipe($.if(!c.production, $.cssbeautify()))
 			.pipe($.autoprefixer({browsers: c.prefixBrowsers, cascade: !c.production}))
+			.pipe($.if(c.production, $.csso(), $.cssbeautify()))
 			.pipe($.if(c.debug, $.filelog("app:build:style:src")))
 			.pipe($.concat(c.concatSrcCSSFile))
 			.pipe(
@@ -71,10 +70,10 @@ gulp.task("app:build:style:vendor", function() {
 		.pipe($.if(c.debug, $.filelog("app:build:style:vendor")))
 		.pipe($.sass({
 			includePaths: require("node-neat").with(require("node-bourbon").includePaths),
-			outputStyle: "compressed",
 			onError: c.onError
 		}))
 		.pipe($.cssUrlAdjuster({replace: urlRewriter}))
+		.pipe($.if(!!c.debug, $.cssbeautify(), $.csso()))
 		.pipe($.autoprefixer({browsers: c.prefixBrowsers, cascade: true}))
 		.pipe($.concat(c.concatVendorCSSFile))
 		.pipe(gulp.dest(c.stylesDist))
