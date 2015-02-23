@@ -51,7 +51,8 @@ var config = {
 		"@revision <%= gitRev %>"
 	],
 	packageFile: require("../package.json"),
-	jsPolyfillsFile: gulpConfig.filenameSettings.jsPolyfillsFile
+	jsPolyfillsFile: gulpConfig.filenameSettings.jsPolyfillsFile,
+	tests: gulpConfig.tests
 };
 
 var subFolders = gulpConfig.folderSettings.subFolders;

@@ -25,11 +25,10 @@ gulp.task("app:build:style:src", function(callback) {
 			}))
 			.pipe($.sass({
 				includePaths: sassDirectories,
-				outputStyle: "compressed",
 				onError: c.onError
 			}))
-			.pipe($.if(!c.production, $.cssbeautify()))
 			.pipe($.autoprefixer({browsers: c.prefixBrowsers, cascade: !c.production}))
+			.pipe($.if(c.production, $.csso(), $.cssbeautify()))
 			.pipe($.if(c.debug, $.filelog("app:build:style:src")))
 			.pipe($.concat(c.concatSrcCSSFile))
 			.pipe(
@@ -51,12 +50,15 @@ gulp.task("app:build:style:src", function(callback) {
 
 gulp.task("app:build:style:vendor", function() {
 	var urlRewriter = function(rewriteurl, filename){
+		if(rewriteurl.charAt(0) === "/"){
+			return rewriteurl;
+		}
 		var absUrl = path.resolve(path.dirname(filename), rewriteurl);
 		var rootRelative = path.relative(c.bowerComponents, absUrl);
 		rootRelative = rootRelative.replace(/\\/g, "/");
 		var fileUrl = url.parse(rootRelative);
 		if(config.fileTypes.fonts.indexOf(path.extname(fileUrl.pathname).substr(1)) !== -1){
-			return "/" + config.folderSettings.fonts + "/" + rootRelative;
+			return "/" + config.folderSettings.subFolders.fonts + "/" + rootRelative;
 		}
 		return rewriteurl;
 	};
@@ -66,13 +68,12 @@ gulp.task("app:build:style:vendor", function() {
 			errorHandler: c.onError
 		}))
 		.pipe($.if(c.debug, $.filelog("app:build:style:vendor")))
-		.pipe($.cssUrlAdjuster({ replace: urlRewriter }))
 		.pipe($.sass({
 			includePaths: require("node-neat").with(require("node-bourbon").includePaths),
-			outputStyle: "compressed",
 			onError: c.onError
 		}))
 		.pipe($.cssUrlAdjuster({replace: urlRewriter}))
+		.pipe($.if(!!c.debug, $.cssbeautify(), $.csso()))
 		.pipe($.autoprefixer({browsers: c.prefixBrowsers, cascade: true}))
 		.pipe($.concat(c.concatVendorCSSFile))
 		.pipe(gulp.dest(c.stylesDist))
