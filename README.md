@@ -1,5 +1,7 @@
 #Pillars
 
+[![Documentation Status](https://readthedocs.org/projects/pillars/badge/?version=latest)](https://readthedocs.org/projects/pillars/?badge=latest)
+
 ##Quick Command Reference
 
 - **`gulp app:serve`**  
