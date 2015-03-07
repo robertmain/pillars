@@ -12,7 +12,7 @@ var gulp = require("gulp"),
 
 gulp.task("app:build:js:src", function(callback) {
 	git.short(function(rev){
-		var srcStream = gulp.src(c.scriptsSrcGlob)
+		var pipe = gulp.src(c.scriptsSrcGlob)
 			.pipe($.plumber({
 				errorHandler: c.onError
 			}))
@@ -23,31 +23,24 @@ gulp.task("app:build:js:src", function(callback) {
 			.pipe($.if(c.production, $.stripDebug()))
 			.pipe($.if(!c.production, $.complexity({breakOnErrors: false})))
 			.pipe($.if(c.debug, $.filelog("app:build:js:src")))
+			.pipe($.if(!c.production, $.sourcemaps.init()))
 			.pipe($.concat(c.concatSrcJsFile))
-			.pipe($.size({title: "app:build:js:src"}));
-
-		var polyfillStream = srcStream.pipe($.autopolyfiller(c.jsPolyfillsFile, {
-			browsers: c.prefixBrowsers
-		})).pipe($.if(c.debug, $.filelog("app:build:js:polyfill")));
-
-		var pipe = merge(polyfillStream, srcStream)
-			.pipe($.order([
-				c.jsPolyfillsFile,
-				c.concatSrcJsFile
-			]))
-			.pipe($.if(c.debug, $.filelog("app:build:js:src:polyfilled")))
-			.pipe($.concat(c.concatSrcJsFile))
-			.pipe($.if(c.production, $.uglify(c.uglifyConfig), $.jsPrettify()))
-			.pipe(
-				$.header(
-					"/*!\r\n * " + c.copyrightBanner.join("\r\n * ") + "\r\n*/\r\n",
-					{
-						packageFile: c.packageFile,
-						gitRev: rev,
-						d: new Date()
-					}
-				)
-			)
+			.pipe($.size({title: "app:build:js:src"}))
+			//Any plugins between sourcemaps.init and sourcemaps.write need to have sourcemaps support
+			//unless they don't modify the output. There's a list of compatible plugins on the gulp-sourcemaps page
+			.pipe($.if(c.production, $.uglify(c.uglifyConfig)))
+			//An issue is open about header's sourcemaps support but it isn't yet available
+			//.pipe(
+			//	$.header(
+			//		"/*!\r\n * " + c.copyrightBanner.join("\r\n * ") + "\r\n*/\r\n",
+			//		{
+			//			packageFile: c.packageFile,
+			//			gitRev: rev,
+			//			d: new Date()
+			//		}
+			//	)
+			//)
+			.pipe($.if(!c.production, $.sourcemaps.write()))
 			.pipe(gulp.dest(c.scriptsDist));
 
 		pipe.on("end", callback);
@@ -56,12 +49,22 @@ gulp.task("app:build:js:src", function(callback) {
 });
 
 gulp.task("app:build:js:vendor", function(){
-	return gulp.src(mainBowerFiles({filter: c.scriptsRegex}))
+	var polyfillStream = gulp.src(c.scriptsSrcGlob)
+		.pipe($.autopolyfiller(c.jsPolyfillsFile, {
+			browsers: c.prefixBrowsers
+		}));
+	var vendorStream = gulp.src(mainBowerFiles({filter: c.scriptsRegex}))
+		.pipe($.concat(c.concatVendorJsFile));
+	return merge(polyfillStream, vendorStream)
 		.pipe($.plumber({
 			errorHandler: c.onError
 		}))
-		.pipe($.concat(c.concatVendorJsFile))
+		.pipe($.order([
+			c.jsPolyfillsFile,
+			c.concatVendorJsFile
+		]))
 		.pipe($.uglify(c.vendorUglifyConfig))
+		.pipe($.concat(c.concatVendorJsFile))
 		.pipe(gulp.dest(c.scriptsDist))
 		.pipe(reload({stream: true, once: true}))
 		.pipe($.if(c.debug, $.filelog("app:build:js:vendor")))
