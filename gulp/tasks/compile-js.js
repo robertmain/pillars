@@ -30,16 +30,17 @@ gulp.task("app:build:js:src", function(callback) {
 			//unless they don't modify the output. There's a list of compatible plugins on the gulp-sourcemaps page
 			.pipe($.if(c.production, $.uglify(c.uglifyConfig)))
 			//An issue is open about header's sourcemaps support but it isn't yet available
-			//.pipe(
-			//	$.header(
-			//		"/*!\r\n * " + c.copyrightBanner.join("\r\n * ") + "\r\n*/\r\n",
-			//		{
-			//			packageFile: c.packageFile,
-			//			gitRev: rev,
-			//			d: new Date()
-			//		}
-			//	)
-			//)
+			//until then headers for this file are only enabled for production
+			.pipe($.if(c.production,
+				$.header(
+					"/*!\r\n * " + c.copyrightBanner.join("\r\n * ") + "\r\n*/\r\n",
+					{
+						packageFile: c.packageFile,
+						gitRev: rev,
+						d: new Date()
+					}
+				)
+			))
 			.pipe($.if(!c.production, $.sourcemaps.write()))
 			.pipe(gulp.dest(c.scriptsDist));
 
