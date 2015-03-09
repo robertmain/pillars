@@ -64,7 +64,7 @@ gulp.task("app:build:js:vendor", function(){
 			c.jsPolyfillsFile,
 			c.concatVendorJsFile
 		]))
-		.pipe($.uglify(c.vendorUglifyConfig))
+		.pipe($.if(c.debug, $.jsPrettify(), $.uglify(c.vendorUglifyConfig)))
 		.pipe($.concat(c.concatVendorJsFile))
 		.pipe(gulp.dest(c.scriptsDist))
 		.pipe(reload({stream: true, once: true}))
