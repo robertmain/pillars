@@ -2,7 +2,7 @@
   "name": "Pillars",
   "version": "0.0.2",
   "description": "Pillars is a starting framework for any angular/node app. Please modify to suit your needs",
-  "homepage": "http://jsondecode.com",
+  "homepage": "http://bitbucket.com/elementalsoftware/pillars",
   "main": "index.js",
   "dependencies": {
     "express": "latest"
