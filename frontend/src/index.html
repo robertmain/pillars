@@ -9,33 +9,41 @@
 		<script src="scripts/vendor.js"></script>
 		<script src="scripts/src.js"></script>
 	</head>
-	<body layout="row" ng-controller="MainCtrl">
-		<md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2 md-closed ng-isolate-scope md-locked-open" md-component-id="left" md-is-locked-open="$media('gt-sm')" tabindex="-1">
-			<md-toolbar>
-				<h1 class="md-toolbar-tools">Pillars</h1>
-			</md-toolbar>
-			<md-content class="md-padding" ng-controller="SidebarCtrl as sidebar">
-				<md-list>
-					<md-item ng-click="sidebar.setCurrent($index)" ng-repeat="page in sidebar.pages track by $index">
-						<md-item-content>
-							<div class="md-tile-content">
-								<h3>{{page.title}}</h3>
-							</div>
-						</md-item-content>
-						<md-divider ng-if="!$last"></md-divider>
-					</md-item>
-				</md-list>
-			</md-content>
-		</md-sidenav>
-		<div layout="column" layout-fill>
-			<md-toolbar md-scroll-shrink>
-				<div class="md-toolbar-tools">
-					<h3><span>Documentation</span></h3>
-				</div>
-			</md-toolbar>
-			<md-content class="md-padding">
-				<h1>Getting Started</h1>
-			</md-content>
+	<body ng-controller="MainCtrl">
+		<div class="container">
+			<h1>Hello World</h1>
+			<h2>Hello world</h2>
+			<h3>Hello world</h3>
+			<h4>Hello world</h4>
+			<h5>Hello world</h5>
+			<h6>Hello world</h6>
+
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</p>
+
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</p>
+
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</p>
 		</div>
 	</body>
 </html>

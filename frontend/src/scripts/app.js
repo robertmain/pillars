@@ -4,14 +4,10 @@
 	angular.module("pillars", [
 		"pillars.controllers",
 		"pillars.filters",
-		"ui.router",
-		"ngMaterial",
-		"angular-gestures"
+		"ui.router"
 	])
 
-	.config(["$stateProvider", "$urlRouterProvider", "$httpProvider", "$provide", "$locationProvider", "$mdThemingProvider", function($stateProvider, $urlRouterProvider, $httpProvider, $provide, $locationProvider, $mdThemingProvider){
-		$mdThemingProvider.theme("default")
-			.primaryPalette("indigo");
+	.config(["$stateProvider", "$urlRouterProvider", "$httpProvider", "$provide", "$locationProvider", function($stateProvider, $urlRouterProvider, $httpProvider, $provide, $locationProvider){
 		$stateProvider
 			.state("app", {
 				controller: "MainCtrl",
