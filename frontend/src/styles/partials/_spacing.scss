@@ -1,14 +1,14 @@
-$spacing-small: 5px;
+$spacing-small: ms(-1);
 
-$spacing-medium: 10px;
+$spacing-medium: ms(0);
 
-$spacing-large: 20px;
+$spacing-large: ms(1);
 
-$spacing-xlarge: 40px;
+$spacing-xlarge: ms(2);
 
-$spacing-xxlarge: 80px;
+$spacing-xxlarge: ms(3);
 
-$spacing-xxxlarge: 160px;
+$spacing-xxxlarge: ms(4);
 
 @mixin reset-spacing{
 	padding: 0px;
