@@ -11,14 +11,14 @@ $font-weight-normal: 400;
 $font-weight-bold: 600;
 
 //Body Font Sizes
-$body-font-size-small: em(9px);
-$body-font-size-normal: em(14px);
-$body-font-size-large: em(16px);
+$body-font-size-small: ms(-1);
+$body-font-size-normal: ms(0);
+$body-font-size-large: ms(1);
 
 //Heading Sizes
-$heading-font-size-1: em(60px);
-$heading-font-size-2: em(50px);
-$heading-font-size-3: em(40px);
-$heading-font-size-4: em(30px);
-$heading-font-size-5: em(20px);
-$heading-font-size-6: em(10px);
+$heading-font-size-1: ms(4);
+$heading-font-size-2: ms(3);
+$heading-font-size-3: ms(2);
+$heading-font-size-4: ms(1);
+$heading-font-size-5: ms(0);
+$heading-font-size-6: ms(-1);
