@@ -11,7 +11,6 @@ var gulp = require("gulp"),
 gulp.task("app:build:html:src", function(callback){
 	git.short(function(rev){
 		var pipe = gulp.src(c.pagesSrcGlob)
-			.pipe($.jade())
 			.pipe(
 				$.if(c.production,
 					$.minifyHtml({

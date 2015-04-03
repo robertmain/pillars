@@ -29,7 +29,7 @@
 		]
 	},
 	"fileTypes": {
-		"pages": ["jade"],
+		"pages": ["html","htm"],
 		"fonts": ["eot", "svg", "ttf", "woff", "woff2"],
 		"images": ["jpg", "JPG", "png", "PNG", "gif", "GIF"],
 		"scripts": ["js"],
