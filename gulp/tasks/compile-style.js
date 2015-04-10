@@ -68,10 +68,7 @@ gulp.task("app:build:style:vendor", function() {
 			errorHandler: c.onError
 		}))
 		.pipe($.if(c.debug, $.filelog("app:build:style:vendor")))
-		.pipe($.sass({
-			includePaths: require("node-neat").with(require("node-bourbon").includePaths),
-			onError: c.onError
-		}))
+		.pipe($.sass({onError: c.onError}))
 		.pipe($.cssUrlAdjuster({replace: urlRewriter}))
 		.pipe($.if(!!c.debug, $.cssbeautify(), $.csso()))
 		.pipe($.autoprefixer({browsers: c.prefixBrowsers, cascade: true}))
