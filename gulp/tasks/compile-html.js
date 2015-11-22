@@ -9,6 +9,7 @@ var gulp = require("gulp"),
 	});
 
 gulp.task("app:build:html:src", function(callback){
+	var taskName = this.currentTask.name;
 	git.short(function(rev){
 		var pipe = gulp.src(c.pagesSrcGlob)
 			.pipe(
@@ -32,7 +33,7 @@ gulp.task("app:build:html:src", function(callback){
 					}
 				)
 			)
-			.pipe($.if(c.debug, $.filelog("app:build:html:src")))
+			.pipe($.if(c.debug, $.filelog(taskName)))
 			.pipe(gulp.dest(c.dist));
 		pipe.on("end", callback);
 		pipe.pipe(reload({stream: true}));

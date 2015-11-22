@@ -13,6 +13,7 @@ var gulp = require("gulp"),
 	});
 
 gulp.task("app:build:style:src", function(callback) {
+	var taskName = this.currentTask.name;
 	git.short(function(rev){
 		var sassFiles = mainBowerFiles({filter: c.stylesRegex});
 		var sassDirectories = [];
@@ -29,7 +30,7 @@ gulp.task("app:build:style:src", function(callback) {
 			}))
 			.pipe($.autoprefixer({browsers: c.prefixBrowsers, cascade: !c.production}))
 			.pipe($.if(c.production, $.csso(), $.cssbeautify()))
-			.pipe($.if(c.debug, $.filelog("app:build:style:src")))
+			.pipe($.if(c.debug, $.filelog(taskName)))
 			.pipe($.concat(c.concatSrcCSSFile))
 			.pipe(
 				$.header(
@@ -42,13 +43,14 @@ gulp.task("app:build:style:src", function(callback) {
 				)
 			)
 			.pipe(gulp.dest(c.stylesDist))
-			.pipe($.size({title: "app:build:style:src"}));
+			.pipe($.size({title: taskName}));
 		pipe.on("end", callback);
 		pipe.pipe(reload({stream: true, once: true}));
 	});
 });
 
 gulp.task("app:build:style:vendor", function() {
+	var taskName = this.currentTask.name;
 	var urlRewriter = function(rewriteurl, filename){
 		if(rewriteurl.charAt(0) === "/"){
 			return rewriteurl;
@@ -67,16 +69,13 @@ gulp.task("app:build:style:vendor", function() {
 		.pipe($.plumber({
 			errorHandler: c.onError
 		}))
-		.pipe($.if(c.debug, $.filelog("app:build:style:vendor")))
-		.pipe($.sass({
-			includePaths: require("node-neat").with(require("node-bourbon").includePaths),
-			onError: c.onError
-		}))
+		.pipe($.if(c.debug, $.filelog(taskName)))
+		.pipe($.sass({onError: c.onError}))
 		.pipe($.cssUrlAdjuster({replace: urlRewriter}))
 		.pipe($.if(!!c.debug, $.cssbeautify(), $.csso()))
 		.pipe($.autoprefixer({browsers: c.prefixBrowsers, cascade: true}))
 		.pipe($.concat(c.concatVendorCSSFile))
 		.pipe(gulp.dest(c.stylesDist))
 		.pipe(reload({stream: true, once: true}))
-		.pipe($.size({title: "app:build:style:vendor"}));
+		.pipe($.size({title: taskName}));
 });

@@ -11,6 +11,7 @@ var gulp = require("gulp"),
 	});
 
 gulp.task("app:build:js:src", function(callback) {
+	var taskName = this.currentTask.name;
 	git.short(function(rev){
 		var pipe = gulp.src(c.scriptsSrcGlob)
 			.pipe($.plumber({
@@ -22,10 +23,10 @@ gulp.task("app:build:js:src", function(callback) {
 			]))
 			.pipe($.if(c.production, $.stripDebug()))
 			.pipe($.if(!c.production, $.complexity({breakOnErrors: false})))
-			.pipe($.if(c.debug, $.filelog("app:build:js:src")))
+			.pipe($.if(c.debug, $.filelog(taskName)))
 			.pipe($.if(!c.production, $.sourcemaps.init()))
 			.pipe($.concat(c.concatSrcJsFile))
-			.pipe($.size({title: "app:build:js:src"}))
+			.pipe($.size({title: taskName}))
 			//Any plugins between sourcemaps.init and sourcemaps.write need to have sourcemaps support
 			//unless they don't modify the output. There's a list of compatible plugins on the gulp-sourcemaps page
 			.pipe($.if(c.production, $.uglify(c.uglifyConfig)))
@@ -50,6 +51,7 @@ gulp.task("app:build:js:src", function(callback) {
 });
 
 gulp.task("app:build:js:vendor", function(){
+	var taskName = this.currentTask.name;
 	var polyfillStream = gulp.src(c.scriptsSrcGlob)
 		.pipe($.autopolyfiller(c.jsPolyfillsFile, {
 			browsers: c.prefixBrowsers
@@ -68,6 +70,6 @@ gulp.task("app:build:js:vendor", function(){
 		.pipe($.concat(c.concatVendorJsFile))
 		.pipe(gulp.dest(c.scriptsDist))
 		.pipe(reload({stream: true, once: true}))
-		.pipe($.if(c.debug, $.filelog("app:build:js:vendor")))
-		.pipe($.size({title: "app:build:js:vendor"}));
+		.pipe($.if(c.debug, $.filelog(taskName)))
+		.pipe($.size({title: taskName}));
 });
