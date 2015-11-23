@@ -44,7 +44,10 @@ var config = {
 		}
 	},
 	copyrightBanner: [
-		"@copyright <%= packageFile.author %> <%= d.getFullYear() %> - <%= packageFile.description %>",
+		"<%= packageFile.name %>",
+		"<%= packageFile.description %>",
+		"",
+		"@copyright <%= packageFile.author %> <%= d.getFullYear() %>",
 		"@version v<%= packageFile.version %>",
 		"@link <%= packageFile.homepage %>",
 		"@license <%= packageFile.license %>",
