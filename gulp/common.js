@@ -76,7 +76,7 @@ for(var fileType in gulpConfig.fileTypes){
 		if(subFolders.hasOwnProperty(fileType)){
 			config[fileType + "DistGlob"] = config[fileType + "Dist"] + config[fileType + "Glob"];
 			config[fileType + "SrcGlob"] = config[fileType + "Src"] + config[fileType + "Glob"];
-		}else{
+		} else {
 			config[fileType + "DistGlob"] = dist + config[fileType + "Glob"];
 			config[fileType + "SrcGlob"] = src + config[fileType + "Glob"];
 		}
