@@ -1,13 +1,13 @@
-{  
+{
 	"name":"Pillars",
-	"version":"0.0.2",
+	"version":"0.0.3",
 	"description":"Pillars is a starting framework for any angular/node app. Please modify to suit your needs",
 	"homepage":"http://bitbucket.com/elementalsoftware/pillars",
 	"main":"index.js",
-	"dependencies":{  
+	"dependencies":{
 		"express":"latest"
 	},
-	"devDependencies":{  
+	"devDependencies":{
 		"bower":"^1.6.5",
 		"browser-sync":"^2.10.0",
 		"cssgrace":"^3.0.0",
@@ -62,10 +62,10 @@
 		"vinyl-paths":"^2.0.0",
 		"yargs":"^3.29.0"
 	},
-	"scripts":{  
+	"scripts":{
 		"start-frontend":"node index.js"
 	},
-	"repository":{  
+	"repository":{
 		"type":"git",
 		"url":"git@bitbucket.org:jsondecode/pillars.git"
 	},
