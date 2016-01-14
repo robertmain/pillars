@@ -28,6 +28,7 @@ var config = {
 		var pe = new PrettyError();
 		pe.skipNodeFiles();
 		console.log(pe.render(error));
+		this.emit('end');
 	},
 	srcUglifyConfig: {
 		mangle: true,
