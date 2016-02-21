@@ -42,7 +42,7 @@ var config = {
 	},
 	vendorUglifyConfig: {
 		mangle: true,
-		preserveComments: "some",
+		preserveComments: "licence",
 		output: {
 			beautify: false
 		}
