@@ -57,6 +57,7 @@ gulp.task("app:build:js:vendor", function(){
 			browsers: c.prefixBrowsers
 		}));
 	var vendorStream = gulp.src(mainBowerFiles({filter: c.scriptsRegex}))
+		.pipe($.if(c.debug, $.filelog(taskName)))
 		.pipe($.concat(c.concatVendorJsFile));
 	return merge(polyfillStream, vendorStream)
 		.pipe($.plumber({
@@ -70,6 +71,5 @@ gulp.task("app:build:js:vendor", function(){
 		.pipe($.concat(c.concatVendorJsFile))
 		.pipe(gulp.dest(c.scriptsDist))
 		.pipe(reload({stream: true, once: true}))
-		.pipe($.if(c.debug, $.filelog(taskName)))
 		.pipe($.size({title: taskName}));
 });
