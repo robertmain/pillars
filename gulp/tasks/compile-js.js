@@ -23,7 +23,7 @@ gulp.task("app:build:js:src", function(callback) {
 			]))
 			.pipe($.if(c.production, $.stripDebug()))
 			.pipe($.if(!c.production, $.complexity({breakOnErrors: false})))
-			.pipe($.if(c.debug, $.filelog(taskName)))
+			.pipe($.if(c.debug, $.debug({title: taskName})))
 			.pipe($.if(!c.production, $.sourcemaps.init()))
 			.pipe($.concat(c.concatSrcJsFile))
 			.pipe($.size({title: taskName}))
@@ -57,7 +57,7 @@ gulp.task("app:build:js:vendor", function(){
 			browsers: c.prefixBrowsers
 		}));
 	var vendorStream = gulp.src(mainBowerFiles({filter: c.scriptsRegex}))
-		.pipe($.if(c.debug, $.filelog(taskName)))
+		.pipe($.if(c.debug, $.debug({title: taskName})))
 		.pipe($.concat(c.concatVendorJsFile));
 	return merge(polyfillStream, vendorStream)
 		.pipe($.plumber({

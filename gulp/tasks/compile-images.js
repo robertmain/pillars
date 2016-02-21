@@ -13,7 +13,7 @@ gulp.task("app:build:images:src", function(){
         .pipe($.plumber({
             errorHandler: c.onError
         }))
-        .pipe($.if(c.debug, $.filelog(taskName)))
+        .pipe($.if(c.debug, $.debug({title: taskName})))
         .pipe($.size({title: taskName + ":pre"}))
         .pipe($.if(c.production, $.imagemin()))
         .pipe($.size({title: taskName + ":post"}))
