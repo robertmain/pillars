@@ -15,7 +15,7 @@ gulp.task("__app:copy:fonts", function(){
 			mainBowerFiles({filter: c.fontsRegex}),
 			{ base: c.bowerComponents }
 		)
-		.pipe($.if(c.debug, $.filelog(taskName)))
+		.pipe($.if(c.debug, $.debug({title: taskName})))
 		.pipe(gulp.dest(c.fontsDist));
 });
 
@@ -23,7 +23,7 @@ gulp.task("__app:copy:fonts", function(){
 gulp.task("__app:copy:files", function() {
 	var taskName = this.currentTask.name;
 	return gulp.src(c.otherFilesSrc, {nodir: true})
-	.pipe($.if(c.debug, $.filelog(taskName)))
+	.pipe($.if(c.debug, $.debug({title: taskName})))
 	.pipe(gulp.dest(c.dist))
 	.pipe(reload({stream: true, once: true}))
 	.pipe($.size({title: taskName}));

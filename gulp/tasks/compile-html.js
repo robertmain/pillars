@@ -33,7 +33,7 @@ gulp.task("app:build:html:src", function(callback){
 					}
 				)
 			)
-			.pipe($.if(c.debug, $.filelog(taskName)))
+			.pipe($.if(c.debug, $.debug({title: taskName})))
 			.pipe(gulp.dest(c.dist));
 		pipe.on("end", callback);
 		pipe.pipe(reload({stream: true}));
