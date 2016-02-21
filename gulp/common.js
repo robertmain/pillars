@@ -4,7 +4,8 @@ var gulpConfig = require(__dirname + "/config.json"),
 	argv = require("yargs").argv,
 	PrettyError = require("pretty-error"),
 	appConfig = require(__dirname + "/../config.js"),
-	bower = require("bower");
+	bower = require("bower"),
+	path = require('path');
 
 var src = gulpConfig.folderSettings.src;
 var dist = appConfig.webserver.staticDir;
@@ -20,6 +21,8 @@ var config = {
 	prefixBrowsers: gulpConfig.browserSettings.supportedBrowsers,
 
 	bowerComponents: bower.config.directory,
+
+	projectRoot: path.resolve(__dirname + path.sep + ".."),
 
 	//Misc
 	production: Boolean(argv.production),
