@@ -14,8 +14,8 @@ gulp.task("app:build:html:src", function(callback){
 		var pipe = gulp.src(c.pagesSrcGlob)
 			.pipe(
 				$.if(c.production,
-					$.minifyHtml({
-						empty: true
+					$.htmlmin({
+						collapseWhitespace: true
 					}),
 					$.htmlPrettify({
 						"indent_char": "\t",
