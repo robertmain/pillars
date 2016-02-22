@@ -21,6 +21,13 @@ gulp.task("app:build:js:src", function(callback) {
 				"app.js",
 				"app-*.js"
 			]))
+/**
+Gulp JS Hint
+
+Add gulp-jshint and `.jshintrc` config file to have pillars automatically lint js on save.
+*/
+			.pipe($.if(!c.production, $.jscs({fix: false})))
+			.pipe($.if(!c.production, $.jscs.reporter()))
 			.pipe($.if(c.production, $.stripDebug()))
 			.pipe($.if(!c.production, $.complexity({breakOnErrors: false})))
 			.pipe($.if(c.debug, $.filelog(taskName)))
