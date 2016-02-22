@@ -21,9 +21,11 @@ gulp.task("app:build:js:src", function(callback) {
 				"app.js",
 				"app-*.js"
 			]))
+			.pipe($.if(!c.production, $.jscs({fix: false})))
+			.pipe($.if(!c.production, $.jscs.reporter()))
 			.pipe($.if(c.production, $.stripDebug()))
 			.pipe($.if(!c.production, $.complexity({breakOnErrors: false})))
-			.pipe($.if(c.debug, $.filelog(taskName)))
+			.pipe($.if(c.debug, $.debug({title: taskName})))
 			.pipe($.if(!c.production, $.sourcemaps.init()))
 			.pipe($.concat(c.concatSrcJsFile))
 			.pipe($.size({title: taskName}))
@@ -57,6 +59,7 @@ gulp.task("app:build:js:vendor", function(){
 			browsers: c.prefixBrowsers
 		}));
 	var vendorStream = gulp.src(mainBowerFiles({filter: c.scriptsRegex}))
+		.pipe($.if(c.debug, $.debug({title: taskName})))
 		.pipe($.concat(c.concatVendorJsFile));
 	return merge(polyfillStream, vendorStream)
 		.pipe($.plumber({
@@ -70,6 +73,5 @@ gulp.task("app:build:js:vendor", function(){
 		.pipe($.concat(c.concatVendorJsFile))
 		.pipe(gulp.dest(c.scriptsDist))
 		.pipe(reload({stream: true, once: true}))
-		.pipe($.if(c.debug, $.filelog(taskName)))
 		.pipe($.size({title: taskName}));
 });

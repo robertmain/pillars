@@ -4,7 +4,8 @@ var gulpConfig = require(__dirname + "/config.json"),
 	argv = require("yargs").argv,
 	PrettyError = require("pretty-error"),
 	appConfig = require(__dirname + "/../config.js"),
-	bower = require("bower");
+	bower = require("bower"),
+	path = require('path');
 
 var src = gulpConfig.folderSettings.src;
 var dist = appConfig.webserver.staticDir;
@@ -21,6 +22,8 @@ var config = {
 
 	bowerComponents: bower.config.directory,
 
+	projectRoot: path.resolve(__dirname + path.sep + ".."),
+
 	//Misc
 	production: Boolean(argv.production),
 	debug: Boolean(argv.debug),
@@ -28,6 +31,7 @@ var config = {
 		var pe = new PrettyError();
 		pe.skipNodeFiles();
 		console.log(pe.render(error));
+		this.emit('end');
 	},
 	srcUglifyConfig: {
 		mangle: true,
@@ -38,7 +42,7 @@ var config = {
 	},
 	vendorUglifyConfig: {
 		mangle: true,
-		preserveComments: "some",
+		preserveComments: "licence",
 		output: {
 			beautify: false
 		}

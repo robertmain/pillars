@@ -15,22 +15,16 @@ var gulp = require("gulp"),
 gulp.task("app:build:style:src", function(callback) {
 	var taskName = this.currentTask.name;
 	git.short(function(rev){
-		var sassFiles = mainBowerFiles({filter: c.stylesRegex});
-		var sassDirectories = [];
-		sassFiles.forEach(function(sassFile){
-			sassDirectories.push(path.dirname(sassFile));
-		});
 		var pipe = gulp.src(c.stylesSrcGlob)
 			.pipe($.plumber({
 				errorHandler: c.onError
 			}))
 			.pipe($.sass({
-				includePaths: sassDirectories,
-				onError: c.onError
+				includePaths: c.projectRoot + path.sep + c.bowerComponents
 			}))
 			.pipe($.autoprefixer({browsers: c.prefixBrowsers, cascade: !c.production}))
 			.pipe($.if(c.production, $.csso(), $.cssbeautify()))
-			.pipe($.if(c.debug, $.filelog(taskName)))
+			.pipe($.if(c.debug, $.debug({title: taskName})))
 			.pipe($.concat(c.concatSrcCSSFile))
 			.pipe(
 				$.header(
@@ -69,7 +63,7 @@ gulp.task("app:build:style:vendor", function() {
 		.pipe($.plumber({
 			errorHandler: c.onError
 		}))
-		.pipe($.if(c.debug, $.filelog(taskName)))
+		.pipe($.if(c.debug, $.debug({title: taskName})))
 		.pipe($.sass({onError: c.onError}))
 		.pipe($.cssUrlAdjuster({replace: urlRewriter}))
 		.pipe($.if(!!c.debug, $.cssbeautify(), $.csso()))
