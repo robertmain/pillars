@@ -1,7 +1,7 @@
 (function(){
 	"use strict";
 	angular.module("pillars.filters", [])
-	.filter("reverse", function(){
+	.filter("reverse", function() {
 		return function(text){
 			return text.split("").reverse().join("");
 		};
