@@ -2,7 +2,7 @@
 
 var gulp = require("gulp"),
     c = require("../common.js"),
-    reload = require("browser-sync").reload,
+    browsersync = require("../browsersync.js"),
     $ = require("gulp-load-plugins")({
         camelize: true
     });
@@ -18,6 +18,6 @@ gulp.task("app:build:images:src", function(){
         .pipe($.if(c.production, $.imagemin()))
         .pipe($.size({title: taskName + ":post"}))
         .pipe(gulp.dest(c.imagesDist));
-    pipe.pipe(reload({stream: true}));
+    pipe.on("end", browsersync.reload);
     return pipe;
 });

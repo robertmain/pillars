@@ -3,7 +3,7 @@
 var gulp = require("gulp"),
 	c = require("../common.js"),
 	git = require("git-rev"),
-	reload = require("browser-sync").reload,
+	browsersync = require("../browsersync.js"),
 	mainBowerFiles = require("main-bower-files"),
 	merge = require("event-stream").merge,
 	$ = require("gulp-load-plugins")({
@@ -27,6 +27,7 @@ gulp.task("app:build:js:src", function(callback) {
 			.pipe($.if(!c.production, $.complexity({breakOnErrors: false})))
 			.pipe($.if(c.debug, $.debug({title: taskName})))
 			.pipe($.if(!c.production, $.sourcemaps.init()))
+			.pipe($.ngAnnotate())
 			.pipe($.concat(c.concatSrcJsFile))
 			.pipe($.size({title: taskName}))
 			//Any plugins between sourcemaps.init and sourcemaps.write need to have sourcemaps support
@@ -48,7 +49,7 @@ gulp.task("app:build:js:src", function(callback) {
 			.pipe(gulp.dest(c.scriptsDist));
 
 		pipe.on("end", callback);
-		pipe.pipe(reload({stream: true, once: true}));
+		pipe.on("end", browsersync.reload);
 	});
 });
 
@@ -61,7 +62,7 @@ gulp.task("app:build:js:vendor", function(){
 	var vendorStream = gulp.src(mainBowerFiles({filter: c.scriptsRegex}))
 		.pipe($.if(c.debug, $.debug({title: taskName})))
 		.pipe($.concat(c.concatVendorJsFile));
-	return merge(polyfillStream, vendorStream)
+	var pipe = merge(polyfillStream, vendorStream)
 		.pipe($.plumber({
 			errorHandler: c.onError
 		}))
@@ -72,6 +73,7 @@ gulp.task("app:build:js:vendor", function(){
 		.pipe($.if(c.debug, $.jsPrettify(), $.uglify(c.vendorUglifyConfig)))
 		.pipe($.concat(c.concatVendorJsFile))
 		.pipe(gulp.dest(c.scriptsDist))
-		.pipe(reload({stream: true, once: true}))
 		.pipe($.size({title: taskName}));
+	pipe.on("end", browsersync.reload);
+	return pipe;
 });
