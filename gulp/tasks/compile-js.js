@@ -27,6 +27,7 @@ gulp.task("app:build:js:src", function(callback) {
 			.pipe($.if(!c.production, $.complexity({breakOnErrors: false})))
 			.pipe($.if(c.debug, $.debug({title: taskName})))
 			.pipe($.if(!c.production, $.sourcemaps.init()))
+			.pipe($.ngAnnotate())
 			.pipe($.concat(c.concatSrcJsFile))
 			.pipe($.size({title: taskName}))
 			//Any plugins between sourcemaps.init and sourcemaps.write need to have sourcemaps support
