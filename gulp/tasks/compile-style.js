@@ -4,7 +4,7 @@ var gulp = require("gulp"),
 	c = require("../common.js"),
 	config = require("../config.json"),
 	git = require("git-rev"),
-	reload = require("browser-sync").reload,
+	browsersync = require("../browsersync.js"),
 	mainBowerFiles = require("main-bower-files"),
 	path = require("path"),
 	url = require("url"),
@@ -38,8 +38,8 @@ gulp.task("app:build:style:src", function(callback) {
 			)
 			.pipe(gulp.dest(c.stylesDist))
 			.pipe($.size({title: taskName}));
+		pipe.pipe(browsersync.stream());
 		pipe.on("end", callback);
-		pipe.pipe(reload({stream: true, once: true}));
 	});
 });
 
@@ -70,6 +70,6 @@ gulp.task("app:build:style:vendor", function() {
 		.pipe($.autoprefixer({browsers: c.prefixBrowsers, cascade: true}))
 		.pipe($.concat(c.concatVendorCSSFile))
 		.pipe(gulp.dest(c.stylesDist))
-		.pipe(reload({stream: true, once: true}))
+		.pipe(browsersync.stream())
 		.pipe($.size({title: taskName}));
 });

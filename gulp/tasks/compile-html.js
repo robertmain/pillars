@@ -3,7 +3,7 @@
 var gulp = require("gulp"),
 	c = require("../common.js"),
 	git = require("git-rev"),
-	reload = require("browser-sync").reload,
+	browsersync = require("../browsersync.js"),
 	$ = require("gulp-load-plugins")({
 		camelize: true
 	});
@@ -36,6 +36,6 @@ gulp.task("app:build:html:src", function(callback){
 			.pipe($.if(c.debug, $.debug({title: taskName})))
 			.pipe(gulp.dest(c.dist));
 		pipe.on("end", callback);
-		pipe.pipe(reload({stream: true}));
+		pipe.on("end", browsersync.reload);
 	});
 });

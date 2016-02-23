@@ -2,7 +2,7 @@
 
 var gulp = require("gulp"),
 	c = require("../common.js"),
-	reload = require("browser-sync").reload,
+	browsersync = require("../browsersync.js"),
 	mainBowerFiles = require("main-bower-files"),
 	bower = require("bower"),
 	$ = require("gulp-load-plugins")({
@@ -22,11 +22,11 @@ gulp.task("__app:copy:fonts", function(){
 //This task matches empty directories so we exclude directories and only take files
 gulp.task("__app:copy:files", function() {
 	var taskName = this.currentTask.name;
-	return gulp.src(c.otherFilesSrc, {nodir: true})
-	.pipe($.if(c.debug, $.debug({title: taskName})))
-	.pipe(gulp.dest(c.dist))
-	.pipe(reload({stream: true, once: true}))
-	.pipe($.size({title: taskName}));
+	var pipe = gulp.src(c.otherFilesSrc, {nodir: true})
+		.pipe(gulp.dest(c.dist))
+		.pipe($.size({title: taskName}));
+	pipe.on("end", browsersync.reload);
+	return pipe;
 });
 
 gulp.task("__app:install:dependencies", function(callback){
