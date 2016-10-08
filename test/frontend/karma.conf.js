@@ -1,3 +1,6 @@
+var config = require('../../gulp/config.json'),
+    path = require('path');
+
 module.exports = function(config) {
   config.set({
 
@@ -8,26 +11,25 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
 
     // list of files / patterns to load in the browser
-	/*
-		files: [
-	      'bower_components/angular/angular.js',
-	      'bower_components/angular-mocks/angular-mocks.js',
-	      'src/*.js',
-	      'test/*.mocha.js'
-	    ],
-    */
+	files: [
+        config.folderSettings.src + path.sep + config.filenameSettings.concatVendorJsFile,
+        config.folderSettings.src + path.sep + config.filenameSettings.concatSrcJsFile,
+        'test/frontend/**/*.test.js'
+    ],
 
     // list of files to exclude
     exclude: [],
 
     // preprocess matching files before serving them to the browser
-/*    preprocessors: {
+    /* 
+    preprocessors: {
       'src/*.js': ['coverage']
-    },*/
+    },
+    */
 
     coverageReporter: {
-      type: 'text-summary',
-      dir: 'coverage/'
+        type: 'text-summary',
+        dir: 'coverage/'
     },
 
     // test results reporter to use
@@ -53,7 +55,7 @@ module.exports = function(config) {
     singleRun: false,
 
     client: {
-    	captureConsole: true
+        captureConsole: true
     }
   });
 };

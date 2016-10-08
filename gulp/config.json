@@ -1,6 +1,7 @@
 {
 	"folderSettings": {
 		"src": "frontend/src",
+		"docs": "docs",
 		"subFolders": {
 			"fonts": "fonts",
 			"images": "images",

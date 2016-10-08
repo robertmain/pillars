@@ -3,3 +3,4 @@
 /frontend/build/
 /.sass-cache/
 /coverage/*
+docs/
