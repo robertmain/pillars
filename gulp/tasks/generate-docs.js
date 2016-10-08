@@ -5,7 +5,7 @@ var gulp = require('gulp'),
         camelize: true
     }),
     path = require('path'),
-    c = require("./common.js");
+    c = require("../common.js");
 
 gulp.task('app:generate:docs:sass', function(){
     return gulp.src(c.src + path.sep+ config.folderSettings.subFolders.styles + path.sep + 'utils' + path.sep + '**/*.{css,scss}')
